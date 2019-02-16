@@ -25,9 +25,6 @@ public class Seguro implements Serializable {
 	
 	@XmlElement(name="tipo", required=true)
 	protected TipoSeguro tipoSeguro;
-	
-	@XmlElement(required=true)
-	protected double precio;
 
 	public Seguro() {}
 	
@@ -55,7 +52,7 @@ public class Seguro implements Serializable {
 		this.tipoSeguro = tipoSeguro;
 	}
 	
-	public double getPrecio() {
+	public double calculaPrecio() {
 		double precioBase = 0;
 		double precioUsoProfesional = 0;
 		double potencia = this.vehiculo.getPotencia();
@@ -76,9 +73,4 @@ public class Seguro implements Serializable {
 		
 		return (precioBase + precioUsoProfesional + (FACTOR_POTENCIA * potencia));
 	}
-
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
-	
 }

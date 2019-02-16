@@ -1,6 +1,7 @@
 package es.unican.ss.segurosdomain;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -23,7 +24,9 @@ public class Cliente implements Serializable {
 	@XmlElement(name="seguro", required=true)
 	protected List<Seguro> seguros;
 	
-	public Cliente() {}
+	public Cliente() {
+		seguros = new LinkedList<Seguro>();
+	}
 
 	public String getDni() {
 		return dni;

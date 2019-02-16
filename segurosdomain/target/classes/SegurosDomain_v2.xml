@@ -1,1 +1,50 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><aseguradora xmlns="http://www.unican.es/ss/SegurosDomain"><cliente dni="72391113E"><nombre>Fernando Martínez</nombre><email>fmartinez@unican.es</email><seguro id="ABC-123456"><vehiculo matricula="3467 KIO"><potencia>100</potencia><usoprofesional>false</usoprofesional></vehiculo><tipo>TERCEROS</tipo><precio>0.0</precio></seguro><seguro id="DEF-123456"><vehiculo matricula="3461 AZE"><potencia>240</potencia><usoprofesional>true</usoprofesional></vehiculo><tipo>TODO_RIESGO</tipo><precio>0.0</precio></seguro><seguro id="FGH-123456"><vehiculo matricula="3462 PAU"><potencia>150</potencia><usoprofesional>false</usoprofesional></vehiculo><tipo>TODO_RIESGO</tipo><precio>0.0</precio></seguro></cliente><cliente dni="71391113E"><nombre>Fernando Martínez</nombre><email>fmartinez@unican.es</email><seguro id="IJK-123456"><vehiculo matricula="3467 KIO"><potencia>100</potencia><usoprofesional>false</usoprofesional></vehiculo><tipo>TERCEROS</tipo><precio>0.0</precio></seguro><seguro id="LMN-123456"><vehiculo matricula="3461 AZE"><potencia>240</potencia><usoprofesional>true</usoprofesional></vehiculo><tipo>TODO_RIESGO</tipo><precio>0.0</precio></seguro><seguro id="OPQ-123456"><vehiculo matricula="3462 PAU"><potencia>150</potencia><usoprofesional>false</usoprofesional></vehiculo><tipo>TODO_RIESGO_FRANQUICIA</tipo><precio>0.0</precio></seguro></cliente><cliente dni="72398855A"><nombre>Khien Estu</nombre><email>khien.estu@gmail.com</email><seguro id="1"><vehiculo matricula="4328 AKL"><potencia>300</potencia><usoprofesional>false</usoprofesional></vehiculo><tipo>TERCEROS</tipo><precio>0.0</precio></seguro></cliente></aseguradora>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<aseguradora xmlns="http://www.unican.es/ss/SegurosDomain">
+	<cliente dni="72391113E">
+		<nombre>Fernando Martínez</nombre>
+		<email>fmartinez@unican.es</email>
+		<seguro id="ABC-123456">
+			<vehiculo matricula="3467 KIO">
+				<potencia>100</potencia>
+				<usoprofesional>false</usoprofesional>
+			</vehiculo>
+			<tipo>TERCEROS</tipo>
+		</seguro>
+		<seguro id="DEF-123456">
+			<vehiculo matricula="3461 AZE">
+				<potencia>240</potencia>
+				<usoprofesional>true</usoprofesional>
+			</vehiculo>
+			<tipo>TODO_RIESGO</tipo>
+		</seguro>
+		<seguro id="FGH-123456">
+			<vehiculo matricula="3462 PAU">
+				<potencia>150</potencia>
+				<usoprofesional>false</usoprofesional>
+			</vehiculo>
+			<tipo>TODO_RIESGO</tipo>
+		</seguro>
+	</cliente>
+	<cliente dni="71391113E">
+		<nombre>Fernando Martínez</nombre>
+		<email>fmartinez@unican.es</email>
+		<seguro id="IJK-123456">
+			<vehiculo matricula="3467 KIO">
+				<potencia>100</potencia>
+				<usoprofesional>true</usoprofesional>
+			</vehiculo>
+			<tipo>TERCEROS</tipo>
+		</seguro>
+	</cliente>
+	<cliente dni="72398855A">
+		<nombre>Khien Estu</nombre>
+		<email>khien.estu@gmail.com</email>
+		<seguro id="1">
+			<vehiculo matricula="4328 AKL">
+				<potencia>300</potencia>
+				<usoprofesional>false</usoprofesional>
+			</vehiculo>
+			<tipo>TERCEROS</tipo>
+		</seguro>
+	</cliente>
+</aseguradora>

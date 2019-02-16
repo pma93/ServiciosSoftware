@@ -1,7 +1,7 @@
 package es.unican.ss.seguroscliente;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -32,7 +32,7 @@ public class Main {
 				double totalImporteSeguros = 0;
 
 				for(Seguro seguro : cliente.getSeguros()) {
-					totalImporteSeguros += seguro.getPrecio();
+					totalImporteSeguros += seguro.calculaPrecio();
 				}
 				
 				System.out.print(" Total a pagar: " + totalImporteSeguros + "€");
@@ -49,7 +49,7 @@ public class Main {
 			seguro.setId("1");
 			seguro.setTipoSeguro(TipoSeguro.TERCEROS);
 			seguro.setVehiculo(vehiculo);
-			List<Seguro> seguros = new ArrayList<Seguro>();
+			List<Seguro> seguros = new LinkedList<Seguro>();
 			seguros.add(seguro);
 
 			Cliente cliente = new Cliente();

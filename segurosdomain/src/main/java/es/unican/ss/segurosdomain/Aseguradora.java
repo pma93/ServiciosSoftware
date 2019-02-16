@@ -1,6 +1,7 @@
 package es.unican.ss.segurosdomain;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -14,7 +15,9 @@ public class Aseguradora implements Serializable {
 	@XmlElement(name="cliente", required=true)
 	protected List<Cliente> clientes;
 	
-	public Aseguradora() {}
+	public Aseguradora() {
+		clientes = new LinkedList<Cliente>();
+	}
 
 	public List<Cliente> getClientes() {
 		return clientes;
