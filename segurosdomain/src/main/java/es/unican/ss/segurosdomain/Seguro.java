@@ -63,7 +63,7 @@ public class Seguro implements Serializable {
 				break;
 			case TODO_RIESGO:
 				precioBase = PRECIO_BASE_TODORIESGO;
-				if(this.vehiculo.isUsoProfesional())
+				if(this.vehiculo.getUsoProfesional())
 					precioUsoProfesional = PRECIO_USOPROFESIONAL;
 				break;
 			case TODO_RIESGO_FRANQUICIA:

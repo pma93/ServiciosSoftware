@@ -15,11 +15,11 @@ public class Parte implements Serializable {
 	private double importe;
 	
 	@XmlElement(required=true)
-	private Date fecha;
+	private String fecha;
 	
 	@XmlIDREF
-	@XmlElement(required=true)
-	private Seguro Seguro;
+	@XmlElement(name = "seguroref", required=true)
+	private Seguro seguro;
 	
 	public Parte() {}
 	
@@ -31,20 +31,20 @@ public class Parte implements Serializable {
 		this.importe = importe;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
 	public Seguro getSeguro() {
-		return Seguro;
+		return seguro;
 	}
 
 	public void setSeguro(Seguro seguro) {
-		Seguro = seguro;
+		this.seguro = seguro;
 	}
 
 }

@@ -24,8 +24,12 @@ public class Cliente implements Serializable {
 	@XmlElement(name="seguro", required=true)
 	protected List<Seguro> seguros;
 	
+	@XmlElement(name="parte", required=true)
+	protected List<Parte> partes;
+	
 	public Cliente() {
 		seguros = new LinkedList<Seguro>();
+		partes = new LinkedList<Parte>();
 	}
 
 	public String getDni() {
@@ -56,8 +60,15 @@ public class Cliente implements Serializable {
 		return seguros;
 	}
 
-	public void setSeguro(List<Seguro> seguros) {
+	public void setSeguros(List<Seguro> seguros) {
 		this.seguros = seguros;
 	}
 	
+	public List<Parte> getPartes() {
+		return partes;
+	}
+
+	public void setPartes(List<Parte> partes) {
+		this.partes = partes;
+	}
 }

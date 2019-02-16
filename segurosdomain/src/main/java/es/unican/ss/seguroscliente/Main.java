@@ -46,7 +46,7 @@ public class Main {
 			vehiculo.setUsoProfesional(false);
 
 			Seguro seguro = new Seguro();
-			seguro.setId("1");
+			seguro.setId("QKK-923756");
 			seguro.setTipoSeguro(TipoSeguro.TERCEROS);
 			seguro.setVehiculo(vehiculo);
 			List<Seguro> seguros = new LinkedList<Seguro>();
@@ -56,7 +56,7 @@ public class Main {
 			cliente.setDni("72398855A");
 			cliente.setNombre("Khien Estu");
 			cliente.setEmail("khien.estu@gmail.com");
-			cliente.setSeguro(seguros);
+			cliente.setSeguros(seguros);
 
 			aseguradora.getClientes().add(cliente);
 
@@ -67,7 +67,5 @@ public class Main {
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

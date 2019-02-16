@@ -76,8 +76,8 @@
 	<complexType name="Parte">
 		<sequence>
 			<element name="importe" type="decimal" />
-			<element name="fecha" type="date"/>
-			<element name="seguro" type="IDREF" />
+			<element name="fecha" type="string"/>
+			<element name="seguroref" type="IDREF" />
 		</sequence>
 		<attribute name="id" type="tns:SeguroID"/>
 	</complexType>

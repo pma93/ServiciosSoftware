@@ -37,7 +37,7 @@ public class Vehiculo implements Serializable {
 		this.potencia = potencia;
 	}
 
-	public boolean isUsoProfesional() {
+	public boolean getUsoProfesional() {
 		return usoProfesional;
 	}
 
