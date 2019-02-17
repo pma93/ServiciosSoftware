@@ -1,6 +1,7 @@
 package es.unican.ss.seguroscliente;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,8 +25,9 @@ public class Main {
 
 			jaxbctx = JAXBContext.newInstance(Aseguradora.class);
 			// Procesamos el documento (Unmarshall)
+			InputStream segurosDomainXml = Main.class.getClassLoader().getResourceAsStream("SegurosDomain.xml");
 			Unmarshaller unmarshaller = jaxbctx.createUnmarshaller();
-			Aseguradora aseguradora = (Aseguradora) unmarshaller.unmarshal(new File("src/main/resources/SegurosDomain.xml"));
+			Aseguradora aseguradora = (Aseguradora) unmarshaller.unmarshal(segurosDomainXml);
 
 			for (Cliente cliente : aseguradora.getClientes()) {
 				System.out.print("DNI: " + cliente.getDni());
@@ -62,7 +64,7 @@ public class Main {
 
 			// Volcamos a un nuevo fichero xml (marshall)
 			Marshaller marshaller = jaxbctx.createMarshaller();
-			marshaller.marshal(aseguradora, new File("src/main/resources/SegurosDomain_v2.xml"));
+			marshaller.marshal(aseguradora, new File("SegurosDomain_v2.xml"));
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
