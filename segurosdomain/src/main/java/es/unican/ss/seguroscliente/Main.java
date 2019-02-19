@@ -97,7 +97,8 @@ public class Main {
 			System.out.println("=== PARTE 6: Clientes (SAX) ===");
 
 			// Parsear el fichero
-			saxParser.parse("src/main/resources/SegurosDomain.xml", handler);
+			InputStream segurosDomainXml = Main.class.getClassLoader().getResourceAsStream("SegurosDomain.xml");
+			saxParser.parse(segurosDomainXml, handler);
 
 			System.out.println("Numero de clientes: " + handler.getNumClientes());
 			System.out.println("=============================");
