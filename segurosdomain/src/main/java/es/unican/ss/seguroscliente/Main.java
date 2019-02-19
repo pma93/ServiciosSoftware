@@ -69,8 +69,8 @@ public class Main {
 			// Creacion de cliente con el vehiculo y seguro anteriores
 			Cliente cliente = new Cliente();
 			cliente.setDni("72398855A");
-			cliente.setNombre("Khien Estu");
-			cliente.setEmail("khien.estu@gmail.com");
+			cliente.setNombre("Khien Stu");
+			cliente.setEmail("khien.stu@unican.es");
 			cliente.setSeguros(seguros);
 
 			// Se anhade el cliente al listado con el que ya se contaba
@@ -79,7 +79,7 @@ public class Main {
 			// Volcado (marshall) del estado actual a un nuevo fichero xml 
 			// Se escribira en el mismo directorio desde donde se ejecuta el programa
 			Marshaller marshaller = jaxbctx.createMarshaller();
-			marshaller.marshal(aseguradora, new File("SegurosDomain_v2.xml"));
+			marshaller.marshal(aseguradora, new File("SegurosDomain_AutoOutput.xml"));
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
