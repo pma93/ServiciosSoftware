@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:aseguradora
+	xmlns:tns="http://www.unican.es/ss/SegurosDomain"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.unican.es/ss/SegurosDomain SegurosDomain.xsd ">
+
+	<tns:cliente dni="72391113E">
+		<tns:nombre>Fernando Solar</tns:nombre>
+		<tns:email>fsolar@unican.es</tns:email>
+		<tns:seguro id="ABC-123456">
+			<tns:tipo>TERCEROS</tns:tipo>
+			<tns:vehiculo matricula="3467 KIO">
+				<tns:potencia>100</tns:potencia>
+				<tns:usoprofesional>false</tns:usoprofesional>
+			</tns:vehiculo>
+		</tns:seguro>
+		<tns:seguro id="DEF-123456">
+			<tns:tipo>TODO_RIESGO</tns:tipo>
+			<tns:vehiculo matricula="3461 AZE">
+				<tns:potencia>240</tns:potencia>
+				<tns:usoprofesional>true</tns:usoprofesional>
+			</tns:vehiculo>
+		</tns:seguro>
+		<tns:seguro id="FGH-123456">
+			<tns:tipo>TODO_RIESGO</tns:tipo>
+			<tns:vehiculo matricula="3462 PAU">
+				<tns:potencia>150</tns:potencia>
+				<tns:usoprofesional>false</tns:usoprofesional>
+			</tns:vehiculo>
+		</tns:seguro>
+		<!--Parte erroneo-->
+		<tns:parte>
+			<tns:importe>112.0</tns:importe>
+			<tns:fecha>2019-02-01</tns:fecha>
+			<tns:seguroref>IJK-123456</tns:seguroref>
+		</tns:parte>
+	</tns:cliente>
+	
+	<tns:cliente dni="72152745P">
+		<tns:nombre>Pablo Martínez</tns:nombre>
+		<tns:email>pmartinez@unican.es</tns:email>
+		<tns:seguro id="IJK-123456">
+			<tns:tipo>TERCEROS</tns:tipo>
+			<tns:vehiculo matricula="3467 TIO">
+				<tns:potencia>100</tns:potencia>
+				<tns:usoprofesional>true</tns:usoprofesional>
+			</tns:vehiculo>
+		</tns:seguro>
+		<tns:parte>
+			<tns:importe>115.0</tns:importe>
+			<tns:fecha>2019-02-06</tns:fecha>
+			<tns:seguroref>IJK-123456</tns:seguroref>
+		</tns:parte>
+		<!--Parte erroneo-->
+		<tns:parte>
+			<tns:importe>300.0</tns:importe>
+			<tns:fecha>2019-02-17</tns:fecha>
+			<tns:seguroref>FGH-123456</tns:seguroref>
+		</tns:parte>
+	</tns:cliente>
+	
+</tns:aseguradora>

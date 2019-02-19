@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema elementFormDefault="qualified" version="1.0"
+	targetNamespace="http://www.unican.es/ss/SegurosDomain"
+	xmlns:tns="http://www.unican.es/ss/SegurosDomain"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:element name="aseguradora" type="tns:aseguradora" />
+
+	<xs:complexType name="cliente">
+		<xs:sequence>
+			<xs:element name="nombre" type="xs:string" />
+			<xs:element name="email" type="xs:string" />
+			<xs:element name="seguro" type="tns:seguro"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="dni" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="seguro">
+		<xs:sequence>
+			<xs:element name="vehiculo" type="tns:vehiculo" />
+			<xs:element name="tipoSeguro" type="tns:tipoSeguro" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:ID" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="vehiculo">
+		<xs:sequence>
+			<xs:element name="potencia" type="xs:int" />
+			<xs:element name="usoProfesional" type="xs:boolean" />
+		</xs:sequence>
+		<xs:attribute name="matricula" type="xs:string"
+			use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="parte">
+		<xs:sequence>
+			<xs:element name="importe" type="xs:double" />
+			<xs:element name="fecha" type="xs:dateTime" />
+			<xs:element name="Seguro" type="xs:IDREF" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="aseguradora">
+		<xs:sequence>
+			<xs:element name="clientes" type="tns:cliente"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="tipoSeguro">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="TERCEROS" />
+			<xs:enumeration value="TODO_RIESGO" />
+			<xs:enumeration value="TODO_RIESGO_FRANQUICIA" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+
