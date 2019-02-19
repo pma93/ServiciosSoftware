@@ -9,8 +9,6 @@
 			<sequence>
 				<element name="cliente" type="tns:Cliente" minOccurs="0"
 					maxOccurs="unbounded" />
-				<element name="seguro" type="tns:Seguro" minOccurs="0"
-					maxOccurs="unbounded" />
 			</sequence>
 		</complexType>
 	</element>
