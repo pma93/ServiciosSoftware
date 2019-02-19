@@ -11,10 +11,13 @@ import javax.xml.bind.annotation.XmlID;
 @XmlAccessorType(value=XmlAccessType.FIELD)
 public class Seguro implements Serializable {
 
+	// Factor multiplicador aplicable al valor de potencia
 	private static final double FACTOR_POTENCIA = 1.5;
-	private static final int PRECIO_USOPROFESIONAL = 100;
-	private static final int PRECIO_BASE_TODORIESGO = 600;
-	private static final int PRECIO_BASE_TERCEROS = 200;
+	
+	// Precios fijos en euros de los distintos conceptos aplicables
+	private static final double PRECIO_USOPROFESIONAL = 100;
+	private static final double PRECIO_BASE_TODORIESGO = 600;
+	private static final double PRECIO_BASE_TERCEROS = 200;
 
 	@XmlID
     @XmlAttribute(required=true)

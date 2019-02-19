@@ -30,33 +30,34 @@ public class Main {
 		// PARTE 5: Procesamiento de documentos XML con JAXB
 		JAXBContext jaxbctx;
 		try {
-
+			// Procesamos el documento (unmarshall) a partir del contexto JAXB
 			jaxbctx = JAXBContext.newInstance(Aseguradora.class);
-			// Procesamos el documento (Unmarshall)
 			InputStream segurosDomainXml = Main.class.getClassLoader().getResourceAsStream("SegurosDomain.xml");
 			Unmarshaller unmarshaller = jaxbctx.createUnmarshaller();
 			Aseguradora aseguradora = (Aseguradora) unmarshaller.unmarshal(segurosDomainXml);
 
+			// Mostrado de clientes y calculo del importe total de sus seguros
 			System.out.println("=== PARTE 5: Clientes ===");
 			for (Cliente cliente : aseguradora.getClientes()) {
 				System.out.print("DNI: " + cliente.getDni());
 				double totalImporteSeguros = 0;
 
-				for(Seguro seguro : cliente.getSeguros()) {
+				for (Seguro seguro : cliente.getSeguros()) {
 					totalImporteSeguros += seguro.calculaPrecio();
 				}
-				
+
 				System.out.print(" Total a pagar: " + totalImporteSeguros + "€");
 				System.out.println();
 			}
 			System.out.println("=============================");
 
-			// Creación de nuevo cliente con seguro y volcado de la información a fichero xml de salida
+			// Creacion de un vehiculo
 			Vehiculo vehiculo = new Vehiculo();
 			vehiculo.setMatricula("4328 AKL");
 			vehiculo.setPotencia(300);
 			vehiculo.setUsoProfesional(false);
 
+			// Nuevo seguro que tiene como vehiculo el anterior creado
 			Seguro seguro = new Seguro();
 			seguro.setId("QKK-923756");
 			seguro.setTipoSeguro(TipoSeguro.TERCEROS);
@@ -64,36 +65,39 @@ public class Main {
 			List<Seguro> seguros = new LinkedList<Seguro>();
 			seguros.add(seguro);
 
+			// Creacion de cliente con el vehiculo y seguro anteriores
 			Cliente cliente = new Cliente();
 			cliente.setDni("72398855A");
 			cliente.setNombre("Khien Estu");
 			cliente.setEmail("khien.estu@gmail.com");
 			cliente.setSeguros(seguros);
 
+			// Se anhade el cliente al listado con el que ya se contaba
 			aseguradora.getClientes().add(cliente);
 
-			// Volcamos a un nuevo fichero xml (marshall)
+			// Volcado (marshall) del estado actual a un nuevo fichero xml 
+			// Se escribira en el mismo directorio desde donde se ejecuta el programa
 			Marshaller marshaller = jaxbctx.createMarshaller();
 			marshaller.marshal(aseguradora, new File("SegurosDomain_v2.xml"));
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		
+
 		// PARTE 6: Procesamiento de documentos XML con la API Java para SAX
 		try {
 			// Instanciar el parser
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
-			
+
 			// Crear el manejador
 			AseguradoraHandler handler = new AseguradoraHandler();
-			
+
 			System.out.println("=== PARTE 6: Clientes (SAX) ===");
 
 			// Parsear el fichero
 			saxParser.parse("src/main/resources/SegurosDomain.xml", handler);
-			
+
 			System.out.println("Numero de clientes: " + handler.getNumClientes());
 			System.out.println("=============================");
 		} catch (ParserConfigurationException e) {

@@ -16,15 +16,14 @@ public class AseguradoraHandler extends DefaultHandler {
 		
 	@Override
 	public void startDocument() throws SAXException {
-		System.out.println("Empiezo a parsear");
+		System.out.println("Comienzo del parseo");
 	}
 	
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("Finalizo el parseo");
+		System.out.println("Finalización del parseo");
 	}
 	
-
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException {
 		if (qName.equals("tns:cliente")) {
