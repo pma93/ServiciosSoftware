@@ -1,7 +1,5 @@
 package es.unican.ss.segurosSAX;
 
-import java.util.Date;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -31,7 +29,7 @@ public class AseguradoraHandler extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException {
 		if (qName.equals("tns:cliente")) {
 			dniCliente = attrs.getValue("dni");
-			System.out.println("DNI:" + dniCliente);
+			System.out.println("DNI: " + dniCliente);
 			numClientes++;
 		} else if (qName.equals("tns:seguro")) {
 			idSeguro = attrs.getValue("id");
@@ -47,10 +45,9 @@ public class AseguradoraHandler extends DefaultHandler {
 		case "tns:seguroref":
 			seguroref = texto;
 			if (!seguroref.equals(idSeguro)) {
-				System.out.println("El parte de accidente con fecha:" + fecha 
+				System.out.println("El parte de accidente con fecha " + fecha 
 						+ " no pertenece a ningun seguro valido");
 			}
-			//fecha = null;
 		}	
 	}
 
