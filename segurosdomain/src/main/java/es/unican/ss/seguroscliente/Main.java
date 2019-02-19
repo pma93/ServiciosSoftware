@@ -27,6 +27,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		// PARTE 5: Procesamiento de documentos XML con JAXB
 		JAXBContext jaxbctx;
 		try {
 
@@ -36,6 +37,7 @@ public class Main {
 			Unmarshaller unmarshaller = jaxbctx.createUnmarshaller();
 			Aseguradora aseguradora = (Aseguradora) unmarshaller.unmarshal(segurosDomainXml);
 
+			System.out.println("=== PARTE 5: Clientes ===");
 			for (Cliente cliente : aseguradora.getClientes()) {
 				System.out.print("DNI: " + cliente.getDni());
 				double totalImporteSeguros = 0;
@@ -47,6 +49,7 @@ public class Main {
 				System.out.print(" Total a pagar: " + totalImporteSeguros + "€");
 				System.out.println();
 			}
+			System.out.println("=============================");
 
 			// Creación de nuevo cliente con seguro y volcado de la información a fichero xml de salida
 			Vehiculo vehiculo = new Vehiculo();
@@ -77,6 +80,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		// PARTE 6: Procesamiento de documentos XML con la API Java para SAX
 		try {
 			// Instanciar el parser
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -85,10 +89,13 @@ public class Main {
 			// Crear el manejador
 			AseguradoraHandler handler = new AseguradoraHandler();
 			
+			System.out.println("=== PARTE 6: Clientes (SAX) ===");
+
 			// Parsear el fichero
 			saxParser.parse("src/main/resources/SegurosDomain.xml", handler);
 			
 			System.out.println("Numero de clientes: " + handler.getNumClientes());
+			System.out.println("=============================");
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		} catch (SAXException e) {
