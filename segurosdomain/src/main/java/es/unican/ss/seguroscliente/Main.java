@@ -38,9 +38,10 @@ public class Main {
 
 			// Mostrado de clientes y calculo del importe total de sus seguros
 			System.out.println("=== PARTE 5: Clientes ===");
+			double totalImporteSeguros;
 			for (Cliente cliente : aseguradora.getClientes()) {
 				System.out.print("DNI: " + cliente.getDni());
-				double totalImporteSeguros = 0;
+				totalImporteSeguros = 0;
 
 				for (Seguro seguro : cliente.getSeguros()) {
 					totalImporteSeguros += seguro.calculaPrecio();

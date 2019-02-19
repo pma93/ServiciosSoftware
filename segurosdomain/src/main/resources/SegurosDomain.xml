@@ -46,6 +46,13 @@
 				<tns:usoprofesional>true</tns:usoprofesional>
 			</tns:vehiculo>
 		</tns:seguro>
+		<tns:seguro id="LMZ-123456">
+			<tns:tipo>TODO_RIESGO_FRANQUICIA</tns:tipo>
+			<tns:vehiculo matricula="1467 AOI">
+				<tns:potencia>120</tns:potencia>
+				<tns:usoprofesional>false</tns:usoprofesional>
+			</tns:vehiculo>
+		</tns:seguro>
 		<tns:parte>
 			<tns:importe>115.0</tns:importe>
 			<tns:fecha>2019-02-06</tns:fecha>
