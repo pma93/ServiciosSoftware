@@ -1,7 +1,6 @@
 package es.unican.ss.segurosdomain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -46,5 +45,4 @@ public class Parte implements Serializable {
 	public void setSeguro(Seguro seguro) {
 		this.seguro = seguro;
 	}
-
 }
