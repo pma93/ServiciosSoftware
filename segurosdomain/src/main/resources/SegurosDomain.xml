@@ -66,4 +66,15 @@
 		</tns:parte>
 	</tns:cliente>
 	
+	<tns:cliente dni="72272754Q">
+		<tns:nombre>Pepito Perez</tns:nombre>
+		<tns:email>pperez@unican.es</tns:email>
+		<tns:seguro id="YYY-123456">
+			<tns:tipo>TERCEROS</tns:tipo>
+			<tns:vehiculo matricula="1111 ABC">
+				<tns:potencia>100</tns:potencia>
+				<tns:usoprofesional>true</tns:usoprofesional>
+			</tns:vehiculo>
+		</tns:seguro>
+	</tns:cliente>
 </tns:aseguradora>
