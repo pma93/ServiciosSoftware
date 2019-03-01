@@ -1,110 +1,114 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="http://www.unican.es/ss/ServicioAseguradora"
+	xmlns:tns="http://www.unican.es/ss/ServicioAseguradora/"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="NewWSDLFile"
-	targetNamespace="http://www.unican.es/ss/ServicioAseguradora">
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:types="http://www.unican.es/ss/ServicioAseguradora/types/"
+	name="Aseguradora" targetNamespace="http://www.unican.es/ss/ServicioAseguradora/">
 	
 	<!-- ABSTRACT SECTION -->
 	<wsdl:types>
-		<xsd:schema xmlns:sdm="http://www.unican.es/ss/SegurosDomain" targetNamespace="http://www.unican.es/ss/ServicioAseguradora">
-			<xsd:import namespace="http://www.unican.es/ss/SegurosDomain" schemaLocation="SegurosDomain.xsd" />
+		<xsd:schema xmlns:sdm="http://www.unican.es/ss/SegurosDomain" targetNamespace="http://www.unican.es/ss/ServicioAseguradora/">
+			<xsd:import namespace="http://www.unican.es/ss/SegurosDomain" schemaLocation="SegurosDomain.xsd"/>
 
-			<xs:complexType name="DatosNoValidos">
-				<xs:sequence>
-					<xs:element name="error" type="xsd:string" />
-				</xs:sequence>
-			</xs:complexType>
+			<xsd:complexType name="DatosNoValidos">
+				<xsd:sequence>
+					<xsd:element name="error" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
 
-			<xs:complexType name="InfoSeguro">
-				<xs:sequence>
-					<xs:element type="sdm:SeguroTipo" name="tipoSeguro" />
-					<xs:element type="xsd:decimal" name="precio" />
-					<xs:element type="sdm:VehiculoMatricula" name="matricula" />
-				</xs:sequence>
-			</xs:complexType>
+			<xsd:complexType name="InfoSeguro">
+				<xsd:sequence>
+					<xsd:element name="tipoSeguro" type="sdm:SeguroTipo"/>
+					<xsd:element name="precio" type="xsd:decimal"/>
+					<xsd:element name="matricula" type="sdm:VehiculoMatricula"/>
+				</xsd:sequence>
+			</xsd:complexType>
 
-			<xs:complexType name="ListaSeguros">
-				<xs:sequence>
-					<xs:element name="Seguro" minOccurs="0" maxOccurs="unbounded" type="sdm:Seguro" />
-				</xs:sequence>
-			</xs:complexType>
+			<xsd:complexType name="ListaSeguros">
+				<xsd:sequence>
+					<xsd:element name="SeguroCliente" minOccurs="0" maxOccurs="unbounded" type="sdm:Seguro"/>
+				</xsd:sequence>
+			</xsd:complexType>
 
 			<!-- A partir del DNI de un cliente: retornar su lista de seguros -->
-			<xsd:element name="RetornarListaSeguros" type="sdm:DNI" />
-			<xsd:element name="RetornarListaSegurosResponse" type="tns:ListaSeguros" />
+			<xsd:element name="RetornarListaSeguros" type="sdm:DNI"/>
+			<xsd:element name="RetornarListaSegurosResponse" type="tns:ListaSeguros"/>
 
 			<!-- A partir del ID de un seguro: retornar su tipo, precio y matrícula del vehículo asociado -->
-			<xsd:element name="RetornarDatosSeguro" type="sdm:SeguroID" />
-			<xsd:element name="RetornarDatosSeguroResponse" type="tns:InfoSeguro" />
+			<xsd:element name="RetornarDatosSeguro" type="sdm:SeguroID"/>
+			<xsd:element name="RetornarDatosSeguroResponse" type="tns:InfoSeguro"/>
 
 			<!-- Error que retornan las operaciones al invocarlas con un valor que no corresponde a ningún cliente o seguro -->
-			<xsd:element name="DatosNoValidos" type="types:DatosNoValidos" />
+			<xsd:element name="DatosNoValidos" type="types:DatosNoValidos"/>
 		</xsd:schema>
 	</wsdl:types>
+	
 	<wsdl:message name="RetornarListaSegurosRequestMsg">
-		<wsdl:part element="tns:NewOperation" name="parameters" />
+		<wsdl:part name="parameters"  element="tns:RetornarListaSeguros"/>
 	</wsdl:message>
 	<wsdl:message name="RetornarListaSegurosResponseMsg">
-		<wsdl:part element="tns:NewOperationResponse" name="parameters" />
+		<wsdl:part name="parameters" element="tns:RetornarListaSegurosResponse"/>
 	</wsdl:message>
 		<wsdl:message name="RetornarDatosSeguroRequestMsg">
-		<wsdl:part element="tns:NewOperation" name="parameters" />
+		<wsdl:part name="parameters" element="tns:RetornarDatosSeguro"/>
 	</wsdl:message>
 	<wsdl:message name="RetornarDatosSeguroResponseMsg">
-		<wsdl:part element="tns:NewOperationResponse" name="parameters" />
+		<wsdl:part name="parameters" element="tns:RetornarDatosSeguroResponse"/>
 	</wsdl:message>
 	<wsdl:message name="DatosNoValidosException">
-		<wsdl:part name="error" element="types:DatosNoValidos" />
+		<wsdl:part name="error" element="tns:DatosNoValidos"/>
 	</wsdl:message>
+	
 	<wsdl:portType name="ServicioAseguradoraInterface">
 		<wsdl:operation name="RetornarListaSeguros">
 			<wsdl:documentation>Retorna la lista de seguros asociados al DNI de un cliente</wsdl:documentation>
-			<wsdl:input message="tns:RetornarListaSegurosRequestMsg" />
-			<wsdl:output message="tns:RetornarListaSegurosResponseMsg" />
-			<wsdl:fault name="DatosNoValidosException" message="tns:DatosNoValidosException" />
+			<wsdl:input message="tns:RetornarListaSegurosRequestMsg"/>
+			<wsdl:output message="tns:RetornarListaSegurosResponseMsg"/>
+			<wsdl:fault name="DatosNoValidosException" message="tns:DatosNoValidosException"/>
 		</wsdl:operation>
 		<wsdl:operation name="RetornarDatosSeguro">
 			<wsdl:documentation>Retorna el tipo, precio y matrícula del vehículo asociado a un ID de seguro</wsdl:documentation>
-			<wsdl:input message="tns:RetornarDatosSeguroRequestMsg" />
-			<wsdl:output message="tns:RetornarDatosSeguroResponseMsg" />
+			<wsdl:input message="tns:RetornarDatosSeguroRequestMsg"/>
+			<wsdl:output message="tns:RetornarDatosSeguroResponseMsg"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	
 	<!-- CONCRETE SECTION -->
 	<!-- Enlace SOAP -->
 	<wsdl:binding name="ServicioAseguradoraServiceSOAP" type="tns:ServicioAseguradoraInterface">
-		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsdl:operation name="RetornarListaSeguros">
-			<soap:operation soapAction="http://www.unican.es/ss/ServicioAseguradora/RetornarListaSeguros" />
+			<soap:operation soapAction="http://www.unican.es/ss/ServicioAseguradora/RetornarListaSeguros"/>
 			<wsdl:input>
-				<soap:body use="literal" />
+				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output>
-				<soap:body use="literal" />
+				<soap:body use="literal"/>
 			</wsdl:output>
 			<wsdl:fault name="DatosNoValidosException">
-				<soap:fault use="literal" name="DatosNoValidosException" />
+				<soap:fault use="literal" name="DatosNoValidosException"/>
 			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="RetornarDatosSeguro">
-			<soap:operation soapAction="http://www.unican.es/ss/ServicioAseguradora/RetornarDatosSeguro" />
+			<soap:operation soapAction="http://www.unican.es/ss/ServicioAseguradora/RetornarDatosSeguro"/>
 			<wsdl:input>
-				<soap:body use="literal" />
+				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output>
-				<soap:body use="literal" />
+				<soap:body use="literal"/>
 			</wsdl:output>
 			<wsdl:fault name="DatosNoValidosException">
-				<soap:fault use="literal" name="DatosNoValidosException" />
+				<soap:fault use="literal" name="DatosNoValidosException"/>
 			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
 	<!-- Servicio -->
 	<wsdl:service name="ServicioAseguradora">
 		<wsdl:port name="SOAPPort" binding="tns:ServicioAseguradoraServiceSOA">
-			<soap:address location="http://localhost:8080/axis2/services/ServicioAseguradora" />
+			<soap:address location="http://localhost:8080/axis2/services/ServicioAseguradora"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
