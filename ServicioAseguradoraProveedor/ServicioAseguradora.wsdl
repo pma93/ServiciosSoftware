@@ -13,7 +13,7 @@
 			xmlns:sdm="http://www.unican.es/ss/SegurosDomain" 
 			targetNamespace="http://www.unican.es/ss/ServicioAseguradora/types/">
 			
-			<xsd:import namespace="http://www.unican.es/ss/SegurosDomain" schemaLocation="SegurosDomain.xsd"/>
+			<xsd:import namespace="http://www.unican.es/ss/SegurosDomain" schemaLocation="resources/SegurosDomain.xsd"/>
 
 			<xsd:complexType name="DatosNoValidos">
 				<xsd:sequence>
@@ -37,11 +37,11 @@
 
 			<!-- A partir del DNI de un cliente: retornar su lista de seguros -->
 			<xsd:element name="RetornarListaSeguros" type="sdm:DNI"/>
-			<xsd:element name="RetornarListaSegurosResponse" type="tns:ListaSeguros"/>
+			<xsd:element name="RetornarListaSegurosResponse" type="types:ListaSeguros"/>
 
 			<!-- A partir del ID de un seguro: retornar su tipo, precio y matrícula del vehículo asociado -->
 			<xsd:element name="RetornarDatosSeguro" type="sdm:SeguroID"/>
-			<xsd:element name="RetornarDatosSeguroResponse" type="tns:InfoSeguro"/>
+			<xsd:element name="RetornarDatosSeguroResponse" type="types:InfoSeguro"/>
 
 			<!-- Error que retornan las operaciones al invocarlas con un valor que no corresponde a ningún cliente o seguro -->
 			<xsd:element name="DatosNoValidos" type="types:DatosNoValidos"/>
@@ -110,7 +110,7 @@
 	
 	<!-- Servicio -->
 	<wsdl:service name="ServicioAseguradora">
-		<wsdl:port name="SOAPPort" binding="tns:ServicioAseguradoraServiceSOA">
+		<wsdl:port name="SOAPPort" binding="tns:ServicioAseguradoraServiceSOAP">
 			<soap:address location="http://localhost:8080/axis2/services/ServicioAseguradora"/>
 		</wsdl:port>
 	</wsdl:service>
