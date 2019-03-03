@@ -104,7 +104,9 @@ public class SegurosSSMessageReceiverInOut extends org.apache.axis2.receivers.Ab
             org.apache.axis2.AxisFault f = createAxisFault(e);
 
             if (e.getFaultMessage() != null) {
-                f.setDetail(toOM(e.getFaultMessage(), false));
+                f.setDetail(toOM(e.getFaultMessage(), false, new javax.xml.namespace.QName(
+                        "http://www.unican.es/ss/SegurosSS/types/",
+                        "RetornarListaSegurosResponse")));
             }
 
             throw f;
