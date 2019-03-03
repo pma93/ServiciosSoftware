@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="http://www.unican.es/ss/ServicioAseguradora/"
+	xmlns:tns="http://www.unican.es/ss/Aseguradora/"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:types="http://www.unican.es/ss/ServicioAseguradora/types/"
-	name="Aseguradora" targetNamespace="http://www.unican.es/ss/ServicioAseguradora/">
+	xmlns:types="http://www.unican.es/ss/Aseguradora/types/"
+	name="Aseguradora" targetNamespace="http://www.unican.es/ss/Aseguradora/">
 	
 	<!-- ABSTRACT SECTION -->
 	<wsdl:types>
 		<xsd:schema 
 			xmlns:sdm="http://www.unican.es/ss/SegurosDomain" 
-			targetNamespace="http://www.unican.es/ss/ServicioAseguradora/types/">
+			targetNamespace="http://www.unican.es/ss/Aseguradora/types/">
 			
 			<xsd:import namespace="http://www.unican.es/ss/SegurosDomain" schemaLocation="resources/SegurosDomain.xsd"/>
 
@@ -64,7 +64,7 @@
 		<wsdl:part name="error" element="types:DatosNoValidos"/>
 	</wsdl:message>
 	
-	<wsdl:portType name="ServicioAseguradoraInterface">
+	<wsdl:portType name="AseguradoraInterface">
 		<wsdl:operation name="RetornarListaSeguros">
 			<wsdl:documentation>Retorna la lista de seguros asociados al DNI de un cliente</wsdl:documentation>
 			<wsdl:input message="tns:RetornarListaSegurosRequestMsg"/>
@@ -80,10 +80,10 @@
 	
 	<!-- CONCRETE SECTION -->
 	<!-- Enlace SOAP -->
-	<wsdl:binding name="ServicioAseguradoraServiceSOAP" type="tns:ServicioAseguradoraInterface">
+	<wsdl:binding name="AseguradoraServiceSOAP" type="tns:AseguradoraInterface">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsdl:operation name="RetornarListaSeguros">
-			<soap:operation soapAction="http://www.unican.es/ss/ServicioAseguradora/RetornarListaSeguros"/>
+			<soap:operation soapAction="http://www.unican.es/ss/Aseguradora/RetornarListaSeguros"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
@@ -95,7 +95,7 @@
 			</wsdl:fault>
 		</wsdl:operation>
 		<wsdl:operation name="RetornarDatosSeguro">
-			<soap:operation soapAction="http://www.unican.es/ss/ServicioAseguradora/RetornarDatosSeguro"/>
+			<soap:operation soapAction="http://www.unican.es/ss/Aseguradora/RetornarDatosSeguro"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
@@ -109,9 +109,9 @@
 	</wsdl:binding>
 	
 	<!-- Servicio -->
-	<wsdl:service name="ServicioAseguradora">
-		<wsdl:port name="SOAPPort" binding="tns:ServicioAseguradoraServiceSOAP">
-			<soap:address location="http://localhost:8080/axis2/services/ServicioAseguradora"/>
+	<wsdl:service name="Aseguradora">
+		<wsdl:port name="SOAPPort" binding="tns:AseguradoraServiceSOAP">
+			<soap:address location="http://localhost:8080/axis2/services/Aseguradora"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
