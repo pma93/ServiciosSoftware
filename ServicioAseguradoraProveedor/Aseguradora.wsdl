@@ -75,6 +75,7 @@
 			<wsdl:documentation>Retorna el tipo, precio y matrícula del vehículo asociado a un ID de seguro</wsdl:documentation>
 			<wsdl:input message="tns:RetornarDatosSeguroRequestMsg"/>
 			<wsdl:output message="tns:RetornarDatosSeguroResponseMsg"/>
+			<wsdl:fault name="DatosNoValidosException" message="tns:DatosNoValidosException"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	
