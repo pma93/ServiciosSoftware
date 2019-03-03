@@ -3,14 +3,16 @@
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:tns="http://www.unican.es/ss/ServicioAseguradora/"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:types="http://www.unican.es/ss/ServicioAseguradora/types/"
 	name="Aseguradora" targetNamespace="http://www.unican.es/ss/ServicioAseguradora/">
 	
 	<!-- ABSTRACT SECTION -->
 	<wsdl:types>
-		<xsd:schema xmlns:sdm="http://www.unican.es/ss/SegurosDomain" targetNamespace="http://www.unican.es/ss/ServicioAseguradora/">
+		<xsd:schema 
+			xmlns:sdm="http://www.unican.es/ss/SegurosDomain" 
+			targetNamespace="http://www.unican.es/ss/ServicioAseguradora/types/">
+			
 			<xsd:import namespace="http://www.unican.es/ss/SegurosDomain" schemaLocation="SegurosDomain.xsd"/>
 
 			<xsd:complexType name="DatosNoValidos">
@@ -47,19 +49,19 @@
 	</wsdl:types>
 	
 	<wsdl:message name="RetornarListaSegurosRequestMsg">
-		<wsdl:part name="parameters"  element="tns:RetornarListaSeguros"/>
+		<wsdl:part name="parameters" element="types:RetornarListaSeguros"/>
 	</wsdl:message>
 	<wsdl:message name="RetornarListaSegurosResponseMsg">
-		<wsdl:part name="parameters" element="tns:RetornarListaSegurosResponse"/>
+		<wsdl:part name="parameters" element="types:RetornarListaSegurosResponse"/>
 	</wsdl:message>
 		<wsdl:message name="RetornarDatosSeguroRequestMsg">
-		<wsdl:part name="parameters" element="tns:RetornarDatosSeguro"/>
+		<wsdl:part name="parameters" element="types:RetornarDatosSeguro"/>
 	</wsdl:message>
 	<wsdl:message name="RetornarDatosSeguroResponseMsg">
-		<wsdl:part name="parameters" element="tns:RetornarDatosSeguroResponse"/>
+		<wsdl:part name="parameters" element="types:RetornarDatosSeguroResponse"/>
 	</wsdl:message>
 	<wsdl:message name="DatosNoValidosException">
-		<wsdl:part name="error" element="tns:DatosNoValidos"/>
+		<wsdl:part name="error" element="types:DatosNoValidos"/>
 	</wsdl:message>
 	
 	<wsdl:portType name="ServicioAseguradoraInterface">
@@ -105,6 +107,7 @@
 			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
+	
 	<!-- Servicio -->
 	<wsdl:service name="ServicioAseguradora">
 		<wsdl:port name="SOAPPort" binding="tns:ServicioAseguradoraServiceSOA">
