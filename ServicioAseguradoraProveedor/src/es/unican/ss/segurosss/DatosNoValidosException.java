@@ -6,9 +6,11 @@
  */
 package es.unican.ss.segurosss;
 
+import es.unican.ss.segurosss.types.DatosNoValidos;
+
 public class DatosNoValidosException extends java.lang.Exception {
     private static final long serialVersionUID = 1551655792080L;
-    private es.unican.ss.segurosss.types.DatosNoValidos faultMessage;
+    private DatosNoValidos faultMessage;
 
     public DatosNoValidosException() {
         super("DatosNoValidosException");
@@ -26,11 +28,11 @@ public class DatosNoValidosException extends java.lang.Exception {
         super(cause);
     }
 
-    public void setFaultMessage(es.unican.ss.segurosss.types.DatosNoValidos msg) {
-        faultMessage = msg;
+    public void setFaultMessage(DatosNoValidos d) {
+        faultMessage = d;
     }
 
-    public es.unican.ss.segurosss.types.DatosNoValidos getFaultMessage() {
+    public DatosNoValidos getFaultMessage() {
         return faultMessage;
     }
 }

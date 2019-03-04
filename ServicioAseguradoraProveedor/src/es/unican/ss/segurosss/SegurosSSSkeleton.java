@@ -6,35 +6,62 @@
  */
 package es.unican.ss.segurosss;
 
+import es.unican.ss.dao.AseguradoraDAOImpl;
+import es.unican.ss.dao.IClientesDAO;
+import es.unican.ss.dao.ISegurosDAO;
+import es.unican.ss.segurosdomain.Cliente;
+import es.unican.ss.segurosdomain.Seguro;
+import es.unican.ss.segurosss.types.DatosNoValidos;
+import es.unican.ss.segurosss.types.InfoSeguro;
+import es.unican.ss.segurosss.types.ListaSeguros;
+
 /**
  *  SegurosSSSkeleton java skeleton for the axisService
  */
 public class SegurosSSSkeleton {
-    /**
-     * Auto generated method signature
-     * Retorna el tipo, precio y matrícula del vehículo asociado a un ID de seguro
-     * @param retornarDatosSeguro
-     * @return retornarDatosSeguroResponse
-     * @throws DatosNoValidosException
-     */
-    public es.unican.ss.segurosss.types.InfoSeguro retornarDatosSeguro(
-        java.lang.String retornarDatosSeguro) throws DatosNoValidosException {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#retornarDatosSeguro");
-    }
+	/**
+	 * Auto generated method signature
+	 * Retorna el tipo, precio y matrícula del vehículo asociado a un ID de seguro
+	 * @param retornarDatosSeguro
+	 * @return retornarDatosSeguroResponse
+	 * @throws DatosNoValidosException
+	 */
+	public es.unican.ss.segurosdomain.Seguro retornarDatosSeguro(
+			java.lang.String retornarDatosSeguro) throws DatosNoValidosException {
+		if(!retornarDatosSeguro.matches("^\\d[A-Z]{3}-[0-9]{6}")) {
+			DatosNoValidosException e = new DatosNoValidosException();
+			DatosNoValidos d = new DatosNoValidos();
+			d.setError("El ID del seguro no es correcto");
+			e.setFaultMessage(d);
+			throw e; 
+		}
+		
+		ISegurosDAO i = new AseguradoraDAOImpl();
+		Seguro s = i.seguro(retornarDatosSeguro);
+		
+		return s;
+	}
+	
+	/**
+	 * Auto generated method signature
+	 * Retorna la lista de seguros asociados al DNI de un cliente
+	 * @param retornarListaSeguros
+	 * @return retornarListaSegurosResponse
+	 * @throws DatosNoValidosException
+	 */
+	public es.unican.ss.segurosss.types.ListaSeguros retornarListaSeguros(
+			java.lang.String retornarListaSeguros) throws DatosNoValidosException {
+		if(!retornarListaSeguros.matches("^\\d{8}[A-Z]{1}")) {
+			DatosNoValidosException e = new DatosNoValidosException();
+			DatosNoValidos d = new DatosNoValidos();
+			d.setError("El DNI del cliente no es correcto");
+			e.setFaultMessage(d);
+			throw e;
+		}
 
-    /**
-     * Auto generated method signature
-     * Retorna la lista de seguros asociados al DNI de un cliente
-     * @param retornarListaSeguros
-     * @return retornarListaSegurosResponse
-     * @throws DatosNoValidosException
-     */
-    public es.unican.ss.segurosss.types.ListaSeguros retornarListaSeguros(
-        java.lang.String retornarListaSeguros) throws DatosNoValidosException {
-        //TODO : fill this with the necessary business logic
-        throw new java.lang.UnsupportedOperationException("Please implement " +
-            this.getClass().getName() + "#retornarListaSeguros");
-    }
+		IClientesDAO i = new AseguradoraDAOImpl();
+		Cliente c = i.cliente(retornarListaSeguros);
+
+		return (ListaSeguros) c.getSeguros();
+	}
 }

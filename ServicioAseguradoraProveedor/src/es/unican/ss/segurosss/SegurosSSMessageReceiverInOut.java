@@ -22,7 +22,8 @@ public class SegurosSSMessageReceiverInOut extends org.apache.axis2.receivers.Ab
             jc = javax.xml.bind.JAXBContext.newInstance(java.lang.String.class,
                     es.unican.ss.segurosss.types.InfoSeguro.class,
                     es.unican.ss.segurosss.types.DatosNoValidos.class,
-                    es.unican.ss.segurosss.types.ListaSeguros.class);
+                    es.unican.ss.segurosss.types.ListaSeguros.class,
+                    es.unican.ss.segurosdomain.Seguro.class);
         } catch (javax.xml.bind.JAXBException ex) {
             System.err.println("Unable to create JAXBContext: " +
                 ex.getMessage());
@@ -61,7 +62,7 @@ public class SegurosSSMessageReceiverInOut extends org.apache.axis2.receivers.Ab
                     ((methodName = org.apache.axis2.util.JavaUtils.xmlNameToJavaIdentifier(
                             op.getName().getLocalPart())) != null)) {
                 if ("retornarDatosSeguro".equals(methodName)) {
-                    es.unican.ss.segurosss.types.InfoSeguro retornarDatosSeguroResponse9 =
+                    es.unican.ss.segurosdomain.Seguro retornarDatosSeguroResponse9 =
                         null;
                     java.lang.String wrappedParam = (java.lang.String) fromOM(msgContext.getEnvelope()
                                                                                         .getBody()
@@ -143,7 +144,7 @@ public class SegurosSSMessageReceiverInOut extends org.apache.axis2.receivers.Ab
     }
 
     private org.apache.axiom.om.OMElement toOM(
-        es.unican.ss.segurosss.types.InfoSeguro param, boolean optimizeContent,
+        es.unican.ss.segurosdomain.Seguro param, boolean optimizeContent,
         javax.xml.namespace.QName elementQName)
         throws org.apache.axis2.AxisFault {
         org.apache.axiom.om.OMFactory factory = org.apache.axiom.om.OMAbstractFactory.getOMFactory();
@@ -161,7 +162,7 @@ public class SegurosSSMessageReceiverInOut extends org.apache.axis2.receivers.Ab
 
     private org.apache.axiom.soap.SOAPEnvelope toEnvelope(
         org.apache.axiom.soap.SOAPFactory factory,
-        es.unican.ss.segurosss.types.InfoSeguro param, boolean optimizeContent,
+        es.unican.ss.segurosdomain.Seguro param, boolean optimizeContent,
         javax.xml.namespace.QName elementQName)
         throws org.apache.axis2.AxisFault {
         org.apache.axiom.soap.SOAPEnvelope envelope = factory.getDefaultEnvelope();

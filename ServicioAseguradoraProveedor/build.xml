@@ -62,6 +62,7 @@
         <copy toDir="${classes}/META-INF" failonerror="false">
             <fileset dir="${resources}">
                 <include name="*.xml"/>
+            	<include name="*.xsd"/> <!--Linea icluida para recoger los archivos xsd-->
                 <include name="*.wsdl"/>
                 <exclude name="**/schemaorg_apache_xmlbean/**"/>
             </fileset>
