@@ -26,9 +26,9 @@ public class SegurosSSSkeleton {
 	 * @return retornarDatosSeguroResponse
 	 * @throws DatosNoValidosException
 	 */
-	public es.unican.ss.segurosdomain.Seguro retornarDatosSeguro(
+	public es.unican.ss.segurosss.types.InfoSeguro retornarDatosSeguro(
 			java.lang.String retornarDatosSeguro) throws DatosNoValidosException {
-		if(!retornarDatosSeguro.matches("^\\d[A-Z]{3}-[0-9]{6}")) {
+		if(!retornarDatosSeguro.matches("^\\[A-Z]{3}-[0-9]{6}")) {
 			DatosNoValidosException e = new DatosNoValidosException();
 			DatosNoValidos d = new DatosNoValidos();
 			d.setError("El ID del seguro no es correcto");
@@ -38,8 +38,12 @@ public class SegurosSSSkeleton {
 		
 		ISegurosDAO i = new AseguradoraDAOImpl();
 		Seguro s = i.seguro(retornarDatosSeguro);
+		InfoSeguro is = new InfoSeguro();
+		is.setMatricula(s.getVehiculo().getMatricula());
+		is.setTipoSeguro(s.getTipoSeguro());
+		is.setPrecio(s.calculaPrecio());
 		
-		return s;
+		return is;
 	}
 	
 	/**

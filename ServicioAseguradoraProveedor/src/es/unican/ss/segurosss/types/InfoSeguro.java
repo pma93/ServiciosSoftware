@@ -1,7 +1,6 @@
 
 package es.unican.ss.segurosss.types;
 
-import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -41,7 +40,7 @@ public class InfoSeguro {
     @XmlElement(required = true)
     protected SeguroTipo tipoSeguro;
     @XmlElement(required = true)
-    protected BigDecimal precio;
+    protected double precio;
     @XmlElement(required = true)
     protected String matricula;
 
@@ -74,10 +73,10 @@ public class InfoSeguro {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
@@ -86,10 +85,10 @@ public class InfoSeguro {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setPrecio(BigDecimal value) {
+    public void setPrecio(double value) {
         this.precio = value;
     }
 

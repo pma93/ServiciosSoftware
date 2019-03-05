@@ -24,7 +24,7 @@
 			<xsd:complexType name="InfoSeguro">
 				<xsd:sequence>
 					<xsd:element name="tipoSeguro" type="sdm:SeguroTipo"/>
-					<xsd:element name="precio" type="xsd:decimal"/>
+					<xsd:element name="precio" type="xsd:double"/>
 					<xsd:element name="matricula" type="sdm:VehiculoMatricula"/>
 				</xsd:sequence>
 			</xsd:complexType>
