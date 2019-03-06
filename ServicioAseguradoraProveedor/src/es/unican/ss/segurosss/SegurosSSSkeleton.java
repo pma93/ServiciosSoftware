@@ -29,14 +29,6 @@ public class SegurosSSSkeleton {
 	public es.unican.ss.segurosss.types.InfoSeguro retornarDatosSeguro(
 			java.lang.String retornarDatosSeguro) throws DatosNoValidosException {
 		
-		/*if(!retornarDatosSeguro.matches("^\\[A-Z]{3}-[0-9]{6}")) {
-			DatosNoValidosException e = new DatosNoValidosException();
-			DatosNoValidos d = new DatosNoValidos();
-			d.setError("El formato del ID del seguro no es correcto");
-			e.setFaultMessage(d);
-			throw e; 
-		}*/
-		
 		ISegurosDAO i = new AseguradoraDAOImpl();
 		Seguro s = i.seguro(retornarDatosSeguro);
 		
@@ -66,14 +58,6 @@ public class SegurosSSSkeleton {
 	public es.unican.ss.segurosss.types.ListaSeguros retornarListaSeguros(
 			java.lang.String retornarListaSeguros) throws DatosNoValidosException {
 		
-		/*if(!retornarListaSeguros.matches("^\\d{8}[A-Z]{1}")) {
-			DatosNoValidosException e = new DatosNoValidosException();
-			DatosNoValidos d = new DatosNoValidos();
-			d.setError("El formato del DNI del cliente no es correcto");
-			e.setFaultMessage(d);
-			throw e;
-		}*/
-
 		IClientesDAO i = new AseguradoraDAOImpl();
 		Cliente c = i.cliente(retornarListaSeguros);
 		ListaSeguros ls = new ListaSeguros();
