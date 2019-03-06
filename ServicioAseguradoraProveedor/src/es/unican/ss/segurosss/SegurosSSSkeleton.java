@@ -28,16 +28,26 @@ public class SegurosSSSkeleton {
 	 */
 	public es.unican.ss.segurosss.types.InfoSeguro retornarDatosSeguro(
 			java.lang.String retornarDatosSeguro) throws DatosNoValidosException {
-		if(!retornarDatosSeguro.matches("^\\[A-Z]{3}-[0-9]{6}")) {
+		
+		/*if(!retornarDatosSeguro.matches("^\\[A-Z]{3}-[0-9]{6}")) {
 			DatosNoValidosException e = new DatosNoValidosException();
 			DatosNoValidos d = new DatosNoValidos();
-			d.setError("El ID del seguro no es correcto");
+			d.setError("El formato del ID del seguro no es correcto");
 			e.setFaultMessage(d);
 			throw e; 
-		}
+		}*/
 		
 		ISegurosDAO i = new AseguradoraDAOImpl();
 		Seguro s = i.seguro(retornarDatosSeguro);
+		
+		if(s == null) {
+			DatosNoValidosException e = new DatosNoValidosException();
+			DatosNoValidos d = new DatosNoValidos();
+			d.setError("El seguro no existe");
+			e.setFaultMessage(d);
+			throw e;
+		}
+		
 		InfoSeguro is = new InfoSeguro();
 		is.setMatricula(s.getVehiculo().getMatricula());
 		is.setTipoSeguro(s.getTipoSeguro());
@@ -55,17 +65,28 @@ public class SegurosSSSkeleton {
 	 */
 	public es.unican.ss.segurosss.types.ListaSeguros retornarListaSeguros(
 			java.lang.String retornarListaSeguros) throws DatosNoValidosException {
-		if(!retornarListaSeguros.matches("^\\d{8}[A-Z]{1}")) {
+		
+		/*if(!retornarListaSeguros.matches("^\\d{8}[A-Z]{1}")) {
 			DatosNoValidosException e = new DatosNoValidosException();
 			DatosNoValidos d = new DatosNoValidos();
-			d.setError("El DNI del cliente no es correcto");
+			d.setError("El formato del DNI del cliente no es correcto");
 			e.setFaultMessage(d);
 			throw e;
-		}
+		}*/
 
 		IClientesDAO i = new AseguradoraDAOImpl();
 		Cliente c = i.cliente(retornarListaSeguros);
-
-		return (ListaSeguros) c.getSeguros();
+		ListaSeguros ls = new ListaSeguros();
+		
+		if(c == null) {
+			DatosNoValidosException e = new DatosNoValidosException();
+			DatosNoValidos d = new DatosNoValidos();
+			d.setError("El cliente no existe");
+			e.setFaultMessage(d);
+			throw e;
+		}
+		
+		ls.getSeguroCliente().addAll(c.getSeguros());
+		return ls;
 	}
 }

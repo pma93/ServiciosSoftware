@@ -7,7 +7,7 @@ import es.unican.ss.segurosdomain.Seguro;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-public class AseguradoraDAOImpl implements IClientesDAO, ISegurosDAO{
+public class AseguradoraDAOImpl implements IClientesDAO, ISegurosDAO {
 
 	@Override
 	public Seguro creaSeguro(Seguro s) {
@@ -16,24 +16,25 @@ public class AseguradoraDAOImpl implements IClientesDAO, ISegurosDAO{
 
 	@Override
 	public Seguro seguro(String idSeguro) {
-		Seguro sg= null;
+		Seguro sg = null;
 		JAXBContext jaxbctx;
 		try {
 			jaxbctx = JAXBContext.newInstance(Aseguradora.class);
 			// Procesamos el documento (Unmarshall)
 			Unmarshaller unmarshaller = jaxbctx.createUnmarshaller();
-			
-			Aseguradora a = (Aseguradora) unmarshaller.unmarshal(this.getClass().getClassLoader().getResourceAsStream("META-INF/SegurosDomain.xml"));
-			
+
+			Aseguradora a = (Aseguradora) unmarshaller
+					.unmarshal(this.getClass().getClassLoader().getResourceAsStream("META-INF/SegurosDomain.xml"));
+
 			for (Cliente c : a.getClientes()) {
-				for(Seguro s : c.getSeguros()) {
-						if(s.getId().equals(idSeguro)) {
-							sg = s;
-						}
+				for (Seguro s : c.getSeguros()) {
+					if (s.getId().equals(idSeguro)) {
+						sg = s;
+					}
 				}
 			}
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 		return sg;
 	}
@@ -45,22 +46,23 @@ public class AseguradoraDAOImpl implements IClientesDAO, ISegurosDAO{
 
 	@Override
 	public Cliente cliente(String dni) {
-		Cliente cl= null;
+		Cliente cl = null;
 		JAXBContext jaxbctx;
 		try {
 			jaxbctx = JAXBContext.newInstance(Aseguradora.class);
 			// Procesamos el documento (Unmarshall)
 			Unmarshaller unmarshaller = jaxbctx.createUnmarshaller();
-			
-			Aseguradora a = (Aseguradora) unmarshaller.unmarshal(this.getClass().getClassLoader().getResourceAsStream("META-INF/SegurosDomain.xml"));
-			
+
+			Aseguradora a = (Aseguradora) unmarshaller
+					.unmarshal(this.getClass().getClassLoader().getResourceAsStream("META-INF/SegurosDomain.xml"));
+
 			for (Cliente c : a.getClientes()) {
-				if(c.getDni().equals(dni)) {
-					cl=c;
+				if (c.getDni().equals(dni)) {
+					cl = c;
 				}
 			}
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 		return cl;
 	}

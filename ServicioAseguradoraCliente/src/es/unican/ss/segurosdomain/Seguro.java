@@ -1,125 +1,79 @@
-
 package es.unican.ss.segurosdomain;
+
+import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@XmlAccessorType(value=XmlAccessType.FIELD)
+public class Seguro implements Serializable {
 
-/**
- * <p>Clase Java para Seguro complex type.
- * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.
- * 
- * <pre>
- * &lt;complexType name="Seguro">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="tipo" type="{http://www.unican.es/ss/SegurosDomain}SeguroTipo"/>
- *         &lt;element name="vehiculo" type="{http://www.unican.es/ss/SegurosDomain}Vehiculo"/>
- *       &lt;/sequence>
- *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}ID" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Seguro", propOrder = {
-    "tipo",
-    "vehiculo"
-})
-public class Seguro {
+	// Factor multiplicador aplicable al valor de potencia
+	private static final double FACTOR_POTENCIA = 1.5;
+	
+	// Precios fijos en euros de los distintos conceptos aplicables
+	private static final double PRECIO_USOPROFESIONAL = 100;
+	private static final double PRECIO_BASE_TODORIESGO = 600;
+	private static final double PRECIO_BASE_TERCEROS = 200;
 
-    @XmlElement(required = true)
-    protected SeguroTipo tipo;
-    @XmlElement(required = true)
-    protected Vehiculo vehiculo;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
+	@XmlID
+    @XmlAttribute(required=true)
+	protected String id;
+	
+	@XmlElement(required=true)
+	protected Vehiculo vehiculo;
+	
+	@XmlElement(name="tipo", required=true)
+	protected SeguroTipo tipoSeguro;
 
-    /**
-     * Obtiene el valor de la propiedad tipo.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SeguroTipo }
-     *     
-     */
-    public SeguroTipo getTipo() {
-        return tipo;
-    }
+	public Seguro() {}
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public Vehiculo getVehiculo() {
+		return vehiculo;
+	}
+	
+	public void setVehiculo(Vehiculo vehiculo) {
+		this.vehiculo = vehiculo;
+	}
+	
+	public SeguroTipo getTipoSeguro() {
+		return tipoSeguro;
+	}
+	
+	public void setTipoSeguro(SeguroTipo tipoSeguro) {
+		this.tipoSeguro = tipoSeguro;
+	}
+	
+	public double calculaPrecio() {
+		double precioBase = 0;
+		double precioUsoProfesional = 0;
+		double potencia = this.vehiculo.getPotencia();
 
-    /**
-     * Define el valor de la propiedad tipo.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SeguroTipo }
-     *     
-     */
-    public void setTipo(SeguroTipo value) {
-        this.tipo = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad vehiculo.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Vehiculo }
-     *     
-     */
-    public Vehiculo getVehiculo() {
-        return vehiculo;
-    }
-
-    /**
-     * Define el valor de la propiedad vehiculo.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Vehiculo }
-     *     
-     */
-    public void setVehiculo(Vehiculo value) {
-        this.vehiculo = value;
-    }
-
-    /**
-     * Obtiene el valor de la propiedad id.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Define el valor de la propiedad id.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setId(String value) {
-        this.id = value;
-    }
-
+		switch(this.getTipoSeguro()) {
+			case TERCEROS:
+				precioBase = PRECIO_BASE_TERCEROS;
+				break;
+			case TODO_RIESGO:
+				precioBase = PRECIO_BASE_TODORIESGO;
+				if(this.vehiculo.getUsoProfesional())
+					precioUsoProfesional = PRECIO_USOPROFESIONAL;
+				break;
+			case TODO_RIESGO_FRANQUICIA:
+				precioBase = PRECIO_BASE_TODORIESGO;
+				break;
+		}
+		
+		return (precioBase + precioUsoProfesional + (FACTOR_POTENCIA * potencia));
+	}
 }

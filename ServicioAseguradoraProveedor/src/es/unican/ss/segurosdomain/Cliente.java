@@ -1,7 +1,7 @@
 package es.unican.ss.segurosdomain;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -28,8 +28,8 @@ public class Cliente implements Serializable {
 	protected List<Parte> partes;
 	
 	public Cliente() {
-		seguros = new LinkedList<Seguro>();
-		partes = new LinkedList<Parte>();
+		seguros = new ArrayList<Seguro>();
+		partes = new ArrayList<Parte>();
 	}
 
 	public String getDni() {
