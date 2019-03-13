@@ -25,3 +25,6 @@ buildNumber.properties
 # Ignorar prácticas seminarios
 /VolumenAreaCliente
 /VolumenAreaProveedor
+/DemoJAXWS
+/DemoSeguridad
+/DemoSeguridadCliente
