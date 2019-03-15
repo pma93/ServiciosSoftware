@@ -1,6 +1,11 @@
-package es.unican.ss.P4Proveedor;
+package es.unican.ss.SSGasolineras;
 
-public class Gasolinera implements Comparable<Gasolinera>{
+/**
+ * Gasolinera
+ * 
+ * Representación de una estación.
+*/
+public class Gasolinera implements Comparable<Gasolinera> {
 	
 	private String direccion;
 	private String localidad;
@@ -39,19 +44,22 @@ public class Gasolinera implements Comparable<Gasolinera>{
 		this.precio = precio;
 	}
 	
-	public int compareTo(Gasolinera o) {
-		int valor = 0;
-		if(this.precio<o.precio) {
-			valor =-1;
-		}else if(this.precio>o.precio) {
-			valor=1;
+	public int compareTo(Gasolinera gasolinera) {
+		if(this.precio < gasolinera.precio) {
+			return -1;
+		}else if(this.precio > gasolinera.precio) {
+			return 1;
 		}
-		return valor;
+		return 0;
 	}
 	
 	@Override
 	public String toString() {
-		return "Informacion gasolinera" + " " + this.direccion + " " + this.localidad +
-				" " + this.rotulo;
+		return "======\nInformacion gasolinera:\n" 
+				+ "Dirección: " + this.direccion 
+				+ "\nLocalidad: " + this.localidad 
+				+ "\nRótulo: " + this.rotulo 
+				+ "\nPrecio: " + this.precio 
+				+ "\n======";
 	}
 }

@@ -1,4 +1,4 @@
-package es.unican.ss.P4Proveedor;
+package es.unican.ss.SSGasolineras;
 
 import java.util.List;
 import javax.jws.*;
@@ -6,10 +6,10 @@ import javax.jws.*;
 @WebService
 public interface GasolineraInterface {
 	
-	public Gasolinera retornarGasolineraPrecioMasBarato(String municipio) 
+	public List<Gasolinera> retornarListaGasolineras(String municipio) 
 			throws DatosNoDisponibles, MunicipioNoValido;
 	
-	public List<Gasolinera> retornarListaGasolineras(String municipio) 
+	public Gasolinera retornarGasolineraPrecioMasBarato(String municipio) 
 			throws DatosNoDisponibles, MunicipioNoValido;
 
 }

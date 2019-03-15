@@ -1,4 +1,4 @@
-package es.unican.ss.P4Proveedor;
+package es.unican.ss.SSGasolineras;
 
 public class DatosNoDisponibles extends java.lang.Exception {
     private static final long serialVersionUID = 1520942361812L;
