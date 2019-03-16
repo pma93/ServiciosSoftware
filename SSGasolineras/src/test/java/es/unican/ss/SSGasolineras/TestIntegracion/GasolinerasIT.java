@@ -46,38 +46,111 @@ public class GasolinerasIT {
 		endpoint.stop();
 	}
 	
+	/**
+	 * Test para comprobar que el numero de gasolineras del municipio
+	 * indicado es el correcto
+	 */
 	@Test
 	public void testRetornarListaGasolineras() {
+		System.out.println("Realizando el test: testRetornarListaGasolineras");
 		try {
 			Assert.assertEquals(sut.retornarListaGasolineras("Santander").size(), 23);
-		} catch (DatosNoDisponibles e) {
-			e.printStackTrace();
+			System.out.println("Terminado el test");
 		} catch (MunicipioNoValido e) {
-			e.printStackTrace();
+			System.out.println("El municipio no existe");
+		} catch (DatosNoDisponibles e) {
+			System.out.println("No se ha podido acceder a los datos del municipio "
+					+ "o no existen datos");
 		}
 	}
 
+	/**
+	 * Test para comprobar que la gasolinera del municipio
+	 * indicado es la mas barata
+	 */
 	@Test
 	public void testRetornarGasolineraPrecioMasBarato() {
+		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBarato");
 		try {
 			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Santander").getDireccion(),
 					"ISLA DEL OLEO 19 - POL. IND. NUEVA MONTAÑA");
-		} catch (DatosNoDisponibles e) {
-			e.printStackTrace();
+			System.out.println("Terminado el test");
 		} catch (MunicipioNoValido e) {
-			e.printStackTrace();
+			System.out.println("El municipio no existe");
+		} catch (DatosNoDisponibles e) {
+			System.out.println("No se ha podido acceder a los datos del municipio "
+					+ "o no existen datos");
 		}
 	}
 	
+	/**
+	 * Test para comprobar que se lanza la excepcion MunicipioNoValido
+	 */
 	@Test
-	public void testRetornarGasolineraPrecioMasBaratoNoValido()  {
+	public void testRetornarGasolineraPrecioMasBaratoMunicipioNoValido() {
+		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBaratoMunicipioNoValido");
 		try {
 			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("MunicipioInventado").getDireccion(),
 					null);
+			System.out.println("Terminado el test");
 		} catch (MunicipioNoValido e) {
-			e.printStackTrace();
+			System.out.println("El municipio no existe");
 		} catch (DatosNoDisponibles e) {
-			e.printStackTrace();
+			System.out.println("No se ha podido acceder a los datos del municipio "
+					+ "o no existen datos");
+		}
+	}
+	
+	/**
+	 * Test para comprobar que se lanza la excepcion MunicipioNoValido
+	 */
+	@Test
+	public void testRetornarListaGasolinerasMunicipioNoValido() {
+		System.out.println("Realizando el test: testRetornarListaGasolinerasMunicipioNoValido");
+		try {
+			Assert.assertEquals(sut.retornarListaGasolineras("MunicipioInventado").size(),
+					0);
+			System.out.println("Terminado el test");
+		} catch (MunicipioNoValido e) {
+			System.out.println("El municipio no existe");
+		} catch (DatosNoDisponibles e) {
+			System.out.println("No se ha podido acceder a los datos del municipio "
+					+ "o no existen datos");
+		}
+	}
+	/**
+	 * Test para comprobar que se lanza la excepcion DatosNoDisponibles
+	 */
+	@Test
+	public void testRetornarListaGasolinerasMunicipioDatosNoDisponibles() {
+		System.out.println("Realizando el test: testRetornarListaGasolinerasMunicipioDatosNoDisponibles");
+		try {
+			Assert.assertEquals(sut.retornarListaGasolineras("Noja").size(),
+					0);
+			System.out.println("Terminado el test");
+		} catch (MunicipioNoValido e) {
+			System.out.println("El municipio no existe");
+		} catch (DatosNoDisponibles e) {
+			System.out.println("No se ha podido acceder a los datos del municipio "
+					+ "o no existen datos");
+		}
+	}
+	
+	/**
+	 * Test para comprobar que se lanza la excepcion DatosNoDisponibles
+	 */
+	@Test
+	public void testRetornarGasolineraPrecioMasBaratoDatosNoDisponibles() {
+		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBaratoDatosNoDisponibles");
+		try {
+			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Noja").getDireccion(),
+					null);
+			System.out.println("Terminado el test");
+		} catch (MunicipioNoValido e) {
+			System.out.println("El municipio no existe");
+		} catch (DatosNoDisponibles e) {
+			System.out.println("No se ha podido acceder a los datos del municipio "
+					+ "o no existen datos");
 		}
 	}
 }

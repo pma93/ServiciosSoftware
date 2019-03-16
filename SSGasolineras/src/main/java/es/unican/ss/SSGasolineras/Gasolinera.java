@@ -62,4 +62,5 @@ public class Gasolinera implements Comparable<Gasolinera> {
 				+ "\nPrecio: " + this.precio 
 				+ "\n======";
 	}
+
 }
