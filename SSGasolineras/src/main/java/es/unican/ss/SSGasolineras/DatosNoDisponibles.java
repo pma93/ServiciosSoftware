@@ -5,7 +5,7 @@ public class DatosNoDisponibles extends java.lang.Exception {
     private java.lang.String faultMessage;
 
     public DatosNoDisponibles() {
-        super("ErrorMsj");
+        super("No existen datos para el municipio introducido");
     }
 
     public DatosNoDisponibles(java.lang.String s) {

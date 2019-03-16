@@ -5,7 +5,7 @@ public class MunicipioNoValido extends java.lang.Exception {
     private java.lang.String faultMessage;
 
     public MunicipioNoValido() {
-        super("ErrorMsj");
+        super("El municipio introducido no es valido");
     }
 
     public MunicipioNoValido(java.lang.String s) {

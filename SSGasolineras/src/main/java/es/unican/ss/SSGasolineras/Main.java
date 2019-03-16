@@ -14,7 +14,7 @@ public class Main {
 			System.out.println("Demo arrancada...");
 
 			try {
-				System.out.println(gasolineras.retornarListaGasolineras("Arnuero"));
+				System.out.println(gasolineras.retornarListaGasolineras("Santander"));
 			} catch (DatosNoDisponibles e) {
 				System.out.println("DatosNoDisponibles: Se ha producido un error");
 			} catch (MunicipioNoValido e) {
@@ -22,7 +22,7 @@ public class Main {
 			}
 			
 			try {
-				System.out.println(gasolineras.retornarGasolineraPrecioMasBarato("Arnuero"));
+				System.out.println(gasolineras.retornarGasolineraPrecioMasBarato("Santander"));
 			} catch (DatosNoDisponibles e) {
 				System.out.println("DatosNoDisponibles: Se ha producido un error");
 			} catch (MunicipioNoValido e) {
