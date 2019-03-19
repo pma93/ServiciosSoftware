@@ -54,13 +54,11 @@ public class GasolinerasIT {
 	public void testRetornarListaGasolineras() {
 		System.out.println("Realizando el test: testRetornarListaGasolineras");
 		try {
-			Assert.assertEquals(sut.retornarListaGasolineras("Santander").size(), 23);
-			System.out.println("Terminado el test");
+			Assert.assertEquals(sut.retornarListaGasolineras("Santander").size(), 22);
 		} catch (MunicipioNoValido e) {
-			System.out.println("El municipio no existe");
+			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {
-			System.out.println("No se ha podido acceder a los datos del municipio "
-					+ "o no existen datos");
+			Assert.fail("Se ha lanzado la excepción DatosNoDisponibles y no se esperaba");
 		}
 	}
 
@@ -74,12 +72,10 @@ public class GasolinerasIT {
 		try {
 			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Santander").getDireccion(),
 					"ISLA DEL OLEO 19 - POL. IND. NUEVA MONTAÑA");
-			System.out.println("Terminado el test");
 		} catch (MunicipioNoValido e) {
-			System.out.println("El municipio no existe");
+			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {
-			System.out.println("No se ha podido acceder a los datos del municipio "
-					+ "o no existen datos");
+			Assert.fail("Se ha lanzado la excepción DatosNoDisponibles y no se esperaba");
 		}
 	}
 	
@@ -90,14 +86,11 @@ public class GasolinerasIT {
 	public void testRetornarGasolineraPrecioMasBaratoMunicipioNoValido() {
 		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBaratoMunicipioNoValido");
 		try {
-			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("MunicipioInventado").getDireccion(),
-					null);
-			System.out.println("Terminado el test");
+			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("MunicipioInventado").getDireccion(), null);
 		} catch (MunicipioNoValido e) {
-			System.out.println("El municipio no existe");
+			Assert.assertTrue(e instanceof MunicipioNoValido);
 		} catch (DatosNoDisponibles e) {
-			System.out.println("No se ha podido acceder a los datos del municipio "
-					+ "o no existen datos");
+			Assert.fail("Se ha lanzado la excepción DatosNoDisponibles y no se esperaba");
 		}
 	}
 	
@@ -110,14 +103,13 @@ public class GasolinerasIT {
 		try {
 			Assert.assertEquals(sut.retornarListaGasolineras("MunicipioInventado").size(),
 					0);
-			System.out.println("Terminado el test");
 		} catch (MunicipioNoValido e) {
-			System.out.println("El municipio no existe");
+			Assert.assertTrue(e instanceof MunicipioNoValido);
 		} catch (DatosNoDisponibles e) {
-			System.out.println("No se ha podido acceder a los datos del municipio "
-					+ "o no existen datos");
+			Assert.fail("Se ha lanzado la excepción DatosNoDisponibles y no se esperaba");
 		}
 	}
+	
 	/**
 	 * Test para comprobar que se lanza la excepcion DatosNoDisponibles
 	 */
@@ -127,12 +119,11 @@ public class GasolinerasIT {
 		try {
 			Assert.assertEquals(sut.retornarListaGasolineras("Noja").size(),
 					0);
-			System.out.println("Terminado el test");
 		} catch (MunicipioNoValido e) {
-			System.out.println("El municipio no existe");
+			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {
-			System.out.println("No se ha podido acceder a los datos del municipio "
-					+ "o no existen datos");
+			Assert.assertTrue(e instanceof DatosNoDisponibles);
+
 		}
 	}
 	
@@ -143,14 +134,11 @@ public class GasolinerasIT {
 	public void testRetornarGasolineraPrecioMasBaratoDatosNoDisponibles() {
 		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBaratoDatosNoDisponibles");
 		try {
-			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Noja").getDireccion(),
-					null);
-			System.out.println("Terminado el test");
+			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Noja").getDireccion(), null);
 		} catch (MunicipioNoValido e) {
-			System.out.println("El municipio no existe");
+			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {
-			System.out.println("No se ha podido acceder a los datos del municipio "
-					+ "o no existen datos");
+			Assert.assertTrue(e instanceof DatosNoDisponibles);
 		}
 	}
 }
