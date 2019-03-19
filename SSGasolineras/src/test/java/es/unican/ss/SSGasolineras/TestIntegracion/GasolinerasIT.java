@@ -28,8 +28,7 @@ public class GasolinerasIT {
 	
 	@Before
 	public void setUp() {
-		endpoint = Endpoint.publish("http://localhost:8080/SSGasolineras-0.0.1-SNAPSHOT"
-				, new Gasolineras()); 
+		endpoint = Endpoint.publish("http://localhost:8080/SSGasolineras-0.0.1-SNAPSHOT", new Gasolineras()); 
 		try {
 			url = new URL("http://localhost:8080/SSGasolineras-0.0.1-SNAPSHOT?wsdl");
 			serviceQName = new QName("http://www.unican.es/ss/SSGasolineras", "GasolinerasService"); 
@@ -81,12 +80,14 @@ public class GasolinerasIT {
 	
 	/**
 	 * Test para comprobar que se lanza la excepcion MunicipioNoValido
+	 * para la operación RetornarGasolineraPrecioMasBarato
 	 */
 	@Test
 	public void testRetornarGasolineraPrecioMasBaratoMunicipioNoValido() {
 		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBaratoMunicipioNoValido");
 		try {
 			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("MunicipioInventado").getDireccion(), null);
+			Assert.fail("Se debería haber lanzado la excepción MunicipioNoValido");
 		} catch (MunicipioNoValido e) {
 			Assert.assertTrue(e instanceof MunicipioNoValido);
 		} catch (DatosNoDisponibles e) {
@@ -96,13 +97,14 @@ public class GasolinerasIT {
 	
 	/**
 	 * Test para comprobar que se lanza la excepcion MunicipioNoValido
+	 * para la operación RetornarListaGasolineras
 	 */
 	@Test
 	public void testRetornarListaGasolinerasMunicipioNoValido() {
 		System.out.println("Realizando el test: testRetornarListaGasolinerasMunicipioNoValido");
 		try {
-			Assert.assertEquals(sut.retornarListaGasolineras("MunicipioInventado").size(),
-					0);
+			Assert.assertEquals(sut.retornarListaGasolineras("MunicipioInventado").size(), 0);
+			Assert.fail("Se debería haber lanzado la excepción MunicipioNoValido");
 		} catch (MunicipioNoValido e) {
 			Assert.assertTrue(e instanceof MunicipioNoValido);
 		} catch (DatosNoDisponibles e) {
@@ -112,29 +114,31 @@ public class GasolinerasIT {
 	
 	/**
 	 * Test para comprobar que se lanza la excepcion DatosNoDisponibles
+	 * para la operación RetornarListaGasolineras
 	 */
 	@Test
 	public void testRetornarListaGasolinerasMunicipioDatosNoDisponibles() {
 		System.out.println("Realizando el test: testRetornarListaGasolinerasMunicipioDatosNoDisponibles");
 		try {
-			Assert.assertEquals(sut.retornarListaGasolineras("Noja").size(),
-					0);
+			Assert.assertEquals(sut.retornarListaGasolineras("Noja").size(), 0);
+			Assert.fail("Se debería haber lanzado la excepción DatosNoDisponibles");
 		} catch (MunicipioNoValido e) {
 			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {
 			Assert.assertTrue(e instanceof DatosNoDisponibles);
-
 		}
 	}
 	
 	/**
 	 * Test para comprobar que se lanza la excepcion DatosNoDisponibles
+	 * para la operación RetornarGasolineraPrecioMasBarato
 	 */
 	@Test
 	public void testRetornarGasolineraPrecioMasBaratoDatosNoDisponibles() {
 		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBaratoDatosNoDisponibles");
 		try {
 			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Noja").getDireccion(), null);
+			Assert.fail("Se debería haber lanzado la excepción DatosNoDisponibles");
 		} catch (MunicipioNoValido e) {
 			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {
