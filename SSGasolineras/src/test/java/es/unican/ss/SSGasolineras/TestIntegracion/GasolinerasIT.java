@@ -28,9 +28,9 @@ public class GasolinerasIT {
 	
 	@Before
 	public void setUp() {
-		endpoint = Endpoint.publish("http://localhost:8080/SSGasolineras-0.0.1-SNAPSHOT", new Gasolineras()); 
+		endpoint = Endpoint.publish("http://localhost:8080/SSGasolineras", new Gasolineras()); 
 		try {
-			url = new URL("http://localhost:8080/SSGasolineras-0.0.1-SNAPSHOT?wsdl");
+			url = new URL("http://localhost:8080/SSGasolineras?wsdl");
 			serviceQName = new QName("http://www.unican.es/ss/SSGasolineras", "GasolinerasService"); 
 			portQName = new QName("http://www.unican.es/ss/SSGasolineras", "GasolinerasPort");
 			service = Service.create(url, serviceQName);

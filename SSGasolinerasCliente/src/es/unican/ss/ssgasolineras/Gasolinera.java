@@ -129,5 +129,15 @@ public class Gasolinera {
     public void setRotulo(String value) {
         this.rotulo = value;
     }
+    
+	@Override
+	public String toString() {
+		return "======\nInformacion gasolinera:\n" 
+				+ "Dirección: " + this.direccion 
+				+ "\nLocalidad: " + this.localidad 
+				+ "\nRótulo: " + this.rotulo 
+				+ "\nPrecio: " + this.precio 
+				+ "\n======";
+	}
 
 }
