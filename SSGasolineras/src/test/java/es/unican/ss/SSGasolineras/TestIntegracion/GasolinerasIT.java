@@ -53,7 +53,7 @@ public class GasolinerasIT {
 	public void testRetornarListaGasolineras() {
 		System.out.println("Realizando el test: testRetornarListaGasolineras");
 		try {
-			Assert.assertEquals(sut.retornarListaGasolineras("Santander").size(), 22);
+			Assert.assertEquals(sut.retornarListaGasolineras("Medio Cudeyo").size(), 3);
 		} catch (MunicipioNoValido e) {
 			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {
@@ -69,8 +69,8 @@ public class GasolinerasIT {
 	public void testRetornarGasolineraPrecioMasBarato() {
 		System.out.println("Realizando el test: testRetornarGasolineraPrecioMasBarato");
 		try {
-			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Santander").getDireccion(),
-					"ISLA DEL OLEO 19 - POL. IND. NUEVA MONTAÑA");
+			Assert.assertEquals(sut.retornarGasolineraPrecioMasBarato("Medio Cudeyo").getDireccion(),
+					"CAMINO RUFRIEGO, 0");
 		} catch (MunicipioNoValido e) {
 			Assert.fail("Se ha lanzado la excepción MunicipioNoValido y no se esperaba");
 		} catch (DatosNoDisponibles e) {

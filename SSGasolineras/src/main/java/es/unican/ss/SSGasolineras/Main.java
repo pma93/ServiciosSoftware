@@ -14,7 +14,7 @@ public class Main {
 			System.out.println("Demo arrancada...");
 
 			try {
-				System.out.println(gasolineras.retornarListaGasolineras("Santander"));
+				System.out.println(gasolineras.retornarListaGasolineras("Medio Cudeyo"));
 			} catch (DatosNoDisponibles e) {
 				System.out.println("DatosNoDisponibles: Se ha producido un error");
 			} catch (MunicipioNoValido e) {
@@ -22,7 +22,7 @@ public class Main {
 			}
 			
 			try {
-				System.out.println(gasolineras.retornarGasolineraPrecioMasBarato("Santander"));
+				System.out.println(gasolineras.retornarGasolineraPrecioMasBarato("Medio Cudeyo"));
 			} catch (DatosNoDisponibles e) {
 				System.out.println("DatosNoDisponibles: Se ha producido un error");
 			} catch (MunicipioNoValido e) {
