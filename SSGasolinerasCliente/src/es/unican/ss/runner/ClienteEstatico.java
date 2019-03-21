@@ -5,7 +5,13 @@ import es.unican.ss.ssgasolineras.GasolineraInterface;
 import es.unican.ss.ssgasolineras.GasolinerasService;
 import es.unican.ss.ssgasolineras.MunicipioNoValido_Exception;
 
-public class Cliente {
+/**
+ * ClienteEstatico
+ * 
+ * Implementación estática del cliente para el servicio
+ * desarrollado en el que se ejecutan todas las funcionalidades.
+*/
+public class ClienteEstatico {
 
 	public static void main(String[] args) {
 		GasolinerasService gasolineraService = new GasolinerasService(); 
@@ -13,7 +19,7 @@ public class Cliente {
 		
 		System.out.println("Cliente arrancado...");
 		
-		// Casos válidos
+		// Casos válidos de "Lista de gasolineras" y "Gasolinera con el precio más barato"
 		try {
 			System.out.println(gasolineraPort.retornarListaGasolineras("Medio Cudeyo"));
 		} catch (DatosNoDisponibles_Exception e) {
@@ -30,7 +36,7 @@ public class Cliente {
 			e.printStackTrace();
 		}
 		
-		// Casos de excepción "Municipio no válido"
+		// Casos de excepción "Municipio no válido" de "Lista de gasolineras" y "Gasolinera con el precio más barato"
 		try {
 			System.out.println(gasolineraPort.retornarListaGasolineras("MunicipioInventado"));
 		} catch (DatosNoDisponibles_Exception e) {
@@ -48,7 +54,7 @@ public class Cliente {
 		}
 		
 		
-		// Casos de excepción "Datos no disponibles"
+		// Casos de excepción "Datos no disponibles" de "Lista de gasolineras" y "Gasolinera con el precio más barato"
 		try {
 			System.out.println(gasolineraPort.retornarListaGasolineras("Noja"));
 		} catch (DatosNoDisponibles_Exception e) {
