@@ -15,7 +15,7 @@ public interface ILigaDAO {
 	public List<Equipo> getEquipos();
 
 	/**
-	 * Retorna el equipo cuyo nombre se pasa como par�metro
+	 * Retorna el equipo cuyo nombre se pasa como parámetro
 	 * 
 	 * @param equipo
 	 * @return El equipo o null si no existe
@@ -23,7 +23,7 @@ public interface ILigaDAO {
 	public Equipo getEquipo(String equipo);
 
 	/**
-	 * Actualiza el equipo con los datos que se pasan como par�metro
+	 * Actualiza el equipo con los datos que se pasan como parámetro
 	 * 
 	 * @param e Nuevos datos del equipo
 	 * @return El equipo actualizado o null si no se puede actualizar
@@ -39,14 +39,14 @@ public interface ILigaDAO {
 	public List<Jugador> getJugadores();
 
 	/**
-	 * Retorna el jugador cuyo equipo y dorsal se pasan como par�metros
+	 * Retorna el jugador cuyo equipo y dorsal se pasan como parámetros
 	 * 
 	 * @return Jugador
 	 */
 	public Jugador getJugador(String equipo, int dorsal);
 
 	/**
-	 * Actualiza el jugador cuyo equipo se pasa como par�metros
+	 * Actualiza el jugador cuyo equipo se pasa como parámetros
 	 * 
 	 * @return Jugador actualizado
 	 */
