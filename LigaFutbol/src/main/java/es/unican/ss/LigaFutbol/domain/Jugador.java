@@ -3,7 +3,7 @@ package es.unican.ss.LigaFutbol.domain;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name="jugador")
-public class Jugador {
+public class Jugador implements Comparable<Jugador>{
 	
 	private String nombre;
 	private int dorsal;
@@ -50,6 +50,10 @@ public class Jugador {
 	@XmlElement(name="dorsal")
 	public int getDorsal() {
 		return dorsal;
+	}
+	
+	public int compareTo(Jugador o) {
+		return Integer.compare(goles, o.getGoles());
 	}
 	
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement(name="equipo")
-public class Equipo {
+public class Equipo implements Comparable<Equipo>{
 
 	private String nombre;
 	private int puntos;
@@ -65,6 +65,11 @@ public class Equipo {
 
 	public void setJugadores(List<Jugador> jugadores) {
 		this.jugadores = jugadores;
+	}
+
+	@Override
+	public int compareTo(Equipo o) {
+		return Integer.compare(puntos, o.getPuntos());
 	}
 	
 }
