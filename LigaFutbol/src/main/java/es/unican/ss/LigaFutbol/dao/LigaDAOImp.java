@@ -2,7 +2,6 @@ package es.unican.ss.LigaFutbol.dao;
 
 import java.io.File;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
