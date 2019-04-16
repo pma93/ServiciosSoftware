@@ -28,20 +28,18 @@ public class LigaREST {
 	 * Consultar clasificacion Liga (GET)
 	 */
 	@GET
-	@Path("/{nombreEquipo}")
 	@Produces({"application/xml","application/json"})
 	public Response getClasificacionLiga() {
-		//TODO (Mirar el path)
-		Response.ResponseBuilder builder;
-		List<Equipo> listaEquipos = new ArrayList<Equipo>();
 		
-		if(listaEquipos.addAll(ligaDAO.getEquipos())) {
+		Response.ResponseBuilder builder;
+		
+		List<Equipo> listaEquipos = ligaDAO.getEquipos();
+		if(!listaEquipos.isEmpty()) {
 			Collections.sort(listaEquipos);
 			builder = Response.ok(listaEquipos);
-			return builder.build();
+			return builder.build();	
 		}
-		
-		builder= Response.status(Response.Status.NOT_FOUND);
+		builder = Response.status(Response.Status.NOT_FOUND);
 		return builder.build();
 	}
 
@@ -54,15 +52,14 @@ public class LigaREST {
 	public Response getDatosEquipo(@PathParam("nombreEquipo") String equipo) {
 
 		Response.ResponseBuilder builder;
-
 		Equipo eq = ligaDAO.getEquipo(equipo);
 
-		if(eq == null) {
-			builder= Response.status(Response.Status.NOT_FOUND);
-		}else {
+		if(eq != null) {
 			builder = Response.ok(eq);
+			return builder.build();
 		}
 
+		builder = Response.status(Response.Status.NOT_FOUND);
 		return builder.build();
 	}
 
@@ -74,18 +71,17 @@ public class LigaREST {
 	@Path("/{nombreEquipo}")
 	@Consumes("application/xml")
 	@Produces({"application/xml","application/json"})
-	public Response updateEqupio(@PathParam("nombreEquipo") String nombre, Equipo equipo) {
+	public Response updateEquipo(@PathParam("nombreEquipo") String nombre, Equipo equipo) {
 
 		Response.ResponseBuilder builder;
-
 		Equipo eq = ligaDAO.actualizaEquipo(equipo);
 
-		if(eq == null) {
-			builder= Response.status(Response.Status.NOT_FOUND);
-		}else {
+		if(eq != null) {
 			builder = Response.ok(eq);
+			return builder.build();	
 		}
 
+		builder = Response.status(Response.Status.NOT_FOUND);
 		return builder.build();	
 	}
 
@@ -93,27 +89,26 @@ public class LigaREST {
 	 * Anhadir un jugador a un equipo (POST)
 	 */
 	@POST
-	@Path("/{nombreEquipo}/{dorsal}")
+	@Path("/{nombreEquipo}")
 	@Consumes("application/xml")
 	@Produces({"application/xml","application/json"})
-	public Response addJugadorEquipo(@PathParam("nombreEquipo") String equipo,
-			@PathParam("dorsal") int dorsal, @Context UriInfo uriInfo, Jugador jugador) {
+	public Response addJugadorEquipo(@PathParam("nombreEquipo") String equipo, 
+			@Context UriInfo uriInfo, Jugador jugador) {
 		
 		Response.ResponseBuilder builder;
-		
 		Equipo eq = ligaDAO.getEquipo(equipo);
+		Jugador jug = ligaDAO.getJugador(equipo, jugador.getDorsal());
 		
-		for(Jugador j : eq.getJugadores()) {
-			if(j.getDorsal() == dorsal) {
-				//Ya existe un recurso con ese URI
-				builder = Response.status(Response.Status.CONFLICT);
-			}
+		// Si existe ya, se produce conflicto
+		if(jug != null) {
+			builder = Response.status(Response.Status.CONFLICT);
+			return builder.build();
 		}
 		
 		// Si no existe ya, se añade
 		if(eq.getJugadores().add(jugador)) {
 			ligaDAO.actualizaEquipo(eq);
-			URI location = uriInfo.getAbsolutePathBuilder().build(); 
+			URI location = uriInfo.getAbsolutePathBuilder().build(); // TODO: revisar path
 			builder = Response.created(location);
 		}else {
 			builder = Response.serverError();
@@ -132,22 +127,14 @@ public class LigaREST {
 			@PathParam("dorsal") int dorsal) {
 
 		Response.ResponseBuilder builder;
-
-		Equipo eq = ligaDAO.getEquipo(equipo);
 		Jugador jugador = ligaDAO.getJugador(equipo, dorsal);
-
-		for(Jugador j : eq.getJugadores()) {
-			if(j.getDorsal() == dorsal) {
-				jugador = j;
-			}
-		}
-
-		if(jugador == null) {
-			builder = Response.status(Response.Status.NOT_FOUND);
-		}else {
+		
+		if(jugador != null) {
 			builder = Response.ok(jugador);
+			return builder.build();
 		}
 
+		builder = Response.status(Response.Status.NOT_FOUND);
 		return builder.build();
 	}
 
@@ -163,26 +150,14 @@ public class LigaREST {
 			@PathParam("dorsal") int dorsal, Jugador jugador) {
 		
 		Response.ResponseBuilder builder;
+		Jugador jug = ligaDAO.getJugador(equipo, dorsal);
 		
-		Equipo eq = ligaDAO.getEquipo(equipo);
-		Jugador jug = null;
-		
-		for(Jugador j : eq.getJugadores()) {
-			if(j.getDorsal() == dorsal) {
-				jug = j;
-			}
-		}
-		
-		if(jug == null) {
-			builder= Response.status(Response.Status.NOT_FOUND);
-		}else {
-			jug.setGoles(jugador.getGoles());
-			jug.setTarjetasAmarillas(jugador.getTarjetasAmarillas());
-			jug.setTarjetasRojas(jugador.getTarjetasRojas());
-			ligaDAO.actualizaEquipo(eq);
+		if(ligaDAO.actualizaJugador(equipo, jugador) != null) {
 			builder = Response.ok(jug);
+			return builder.build();
 		}
 		
+		builder = Response.status(Response.Status.NOT_FOUND);
 		return builder.build();
 	}
 	
@@ -196,22 +171,16 @@ public class LigaREST {
 			@PathParam("dorsal") int dorsal) {
 
 		Response.ResponseBuilder builder;
-
 		Equipo eq = ligaDAO.getEquipo(equipo);
-		Jugador jugador = null;
-
-		for(Jugador j : eq.getJugadores()) {
-			if(j.getDorsal() == dorsal) {
-				jugador = j;
-			}
+		Jugador jug = ligaDAO.getJugador(equipo, dorsal);
+		
+		if(eq.getJugadores().remove(jug)) {
+			ligaDAO.actualizaEquipo(eq);
+			builder = Response.ok(jug);
+			return builder.build();
 		}
 
-		if(jugador == null) {
-			builder= Response.status(Response.Status.NOT_FOUND);
-		}else {
-			builder = Response.ok(jugador);
-		}
-
+		builder= Response.status(Response.Status.NOT_FOUND);
 		return builder.build();
 	}
 
@@ -222,24 +191,27 @@ public class LigaREST {
 	@Path("/goleadores")
 	@Produces({"application/xml","application/json"})
 	public Response getRankingGoleadores(@QueryParam("equipo") String equipo) {
-
+				
 		Response.ResponseBuilder builder;
-
-		List<Jugador> listaJugadores = new ArrayList<Jugador>();
-
-		for(Equipo e : ligaDAO.getEquipos()) {
-			listaJugadores.addAll(e.getJugadores());
-			Collections.sort(listaJugadores);
-			if(e.getNombre().equals(equipo)) {
-				builder = Response.ok(listaJugadores);
-				return builder.build();
-			} else {
-				builder = Response.ok(listaJugadores);
-				return builder.build();
+		
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		
+		if(equipo != null) {
+			// Ranking de goleadores de un equipo
+			Equipo eq = ligaDAO.getEquipo(equipo);
+			if(eq != null) {
+				jugadores = eq.getJugadores();
+			}else {
+				builder = Response.status(Response.Status.NOT_FOUND);
+				return builder.build();	
 			}
+		} else {
+			// Ranking de goleadores global
+			jugadores = ligaDAO.getJugadores();
 		}
 
-		builder = Response.status(Response.Status.NOT_FOUND);
-		return builder.build();	
+		Collections.sort(jugadores);
+		builder = Response.ok(jugadores);
+		return builder.build();
 	}
 }
