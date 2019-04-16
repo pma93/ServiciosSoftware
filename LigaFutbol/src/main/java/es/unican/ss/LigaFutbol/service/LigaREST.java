@@ -27,9 +27,22 @@ public class LigaREST {
 	/**
 	 * Consultar clasificacion Liga (GET)
 	 */
+	@GET
+	@Path("/{nombreEquipo}")
+	@Produces({"application/xml","application/json"})
 	public Response getClasificacionLiga() {
-		//TODO
-		return null;
+		//TODO (Mirar el path)
+		Response.ResponseBuilder builder;
+		List<Equipo> listaEquipos = new ArrayList<Equipo>();
+		
+		if(listaEquipos.addAll(ligaDAO.getEquipos())) {
+			Collections.sort(listaEquipos);
+			builder = Response.ok(listaEquipos);
+			return builder.build();
+		}
+		
+		builder= Response.status(Response.Status.NOT_FOUND);
+		return builder.build();
 	}
 
 	/**
