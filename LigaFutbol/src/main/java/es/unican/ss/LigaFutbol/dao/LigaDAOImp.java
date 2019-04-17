@@ -131,7 +131,7 @@ public class LigaDAOImp implements ILigaDAO {
 		// Procesamos el documento (unmarshall)
 		try {
 			jaxbctx = JAXBContext.newInstance(Liga.class);
-			InputStream ligaXml = this.getClass().getResourceAsStream("primeraDivision.xml");
+			InputStream ligaXml = this.getClass().getClassLoader().getResourceAsStream("primeraDivision.xml");
 			unmarshaller = jaxbctx.createUnmarshaller();
 			liga = (Liga) unmarshaller.unmarshal(ligaXml);
 		} catch (JAXBException e) {

@@ -19,6 +19,15 @@ public class Jugador implements Comparable<Jugador>{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
+	@XmlElement(name="dorsal")
+	public int getDorsal() {
+		return dorsal;
+	}
+	
+	public void setDorsal(int dorsal) {
+		this.dorsal = dorsal;
+	}
 
 	@XmlElement(name="goles")
 	public int getGoles() {
@@ -27,6 +36,15 @@ public class Jugador implements Comparable<Jugador>{
 
 	public void setGoles(int goles) {
 		this.goles = goles;
+	}
+	
+	@XmlElement(name="tAmarillas")
+	public int getTarjetasAmarillas() {
+		return tarjetasAmarillas;
+	}
+
+	public void setTarjetasAmarillas(int tarjetasAmarillas) {
+		this.tarjetasAmarillas = tarjetasAmarillas;
 	}
 
 	@XmlElement(name="tRojas")
@@ -37,23 +55,9 @@ public class Jugador implements Comparable<Jugador>{
 	public void setTarjetasRojas(int tarjetasRojas) {
 		this.tarjetasRojas = tarjetasRojas;
 	}
-
-	@XmlElement(name="tAmarillas")
-	public int getTarjetasAmarillas() {
-		return tarjetasAmarillas;
-	}
-
-	public void setTarjetasAmarillas(int tarjetasAmarillas) {
-		this.tarjetasAmarillas = tarjetasAmarillas;
-	}
-
-	@XmlElement(name="dorsal")
-	public int getDorsal() {
-		return dorsal;
-	}
 	
 	public int compareTo(Jugador o) {
-		return Integer.compare(goles, o.getGoles());
+		return Integer.compare(o.getGoles(), goles);
 	}
 	
 }

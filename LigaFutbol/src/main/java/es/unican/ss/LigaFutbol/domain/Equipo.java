@@ -69,7 +69,7 @@ public class Equipo implements Comparable<Equipo>{
 
 	@Override
 	public int compareTo(Equipo o) {
-		return Integer.compare(puntos, o.getPuntos());
+		return Integer.compare(o.getPuntos(), puntos);
 	}
 	
 }
