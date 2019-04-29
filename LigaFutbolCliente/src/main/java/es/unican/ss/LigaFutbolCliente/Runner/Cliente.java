@@ -26,6 +26,7 @@ public class Cliente {
 	
 	public static void main(String[] args) {
 		
+		// Obtenemos el resultado de la jornada almacenado localmente
 		Jornada jornada = getData();
 		
 		for(Partido partido : jornada.getPartidos()) {
@@ -97,7 +98,7 @@ public class Cliente {
 				}
 			}
 			
-			// Anotamos goles del equipo local
+			// Anotamos goles del equipo visitante
 			for(Gol gol : partido.getEquipoVisitante().getGoles()) {
 				for(Jugador jugador : equipoVisitante.getJugadores()) {
 					if(jugador.getDorsal() == gol.getDorsal()) {
