@@ -29,87 +29,93 @@ public class Cliente {
 		// Obtenemos el resultado de la jornada almacenado localmente
 		Jornada jornada = getData();
 		
-		for(Partido partido : jornada.getPartidos()) {
-
-			int resultadoLocal = partido.getEquipoLocal().getTotalGoles();
-			int resultadoVisitante = partido.getEquipoVisitante().getTotalGoles();
+		try {
+			for(Partido partido : jornada.getPartidos()) {
+				int resultadoLocal = partido.getEquipoLocal().getTotalGoles();
+				int resultadoVisitante = partido.getEquipoVisitante().getTotalGoles();
+		
+				Equipo equipoLocal = null;
+				Equipo equipoVisitante = null;
 	
-			// Obtenemos de la API Rest los datos del equipo local
-			Equipo equipoLocal = getEquipoRest(partido.getEquipoLocal().getNombre());
-			
-			// Obtenemos de la API Rest los datos del equipo visitante
-			Equipo equipoVisitante = getEquipoRest(partido.getEquipoVisitante().getNombre());
-			
-			// Anotamos el partido jugado
-			equipoLocal.setPartidosJugados(equipoLocal.getPartidosJugados()+1);
-			equipoVisitante.setPartidosJugados(equipoVisitante.getPartidosJugados()+1);
-			
-			// Anotamos el resultado en base a victoria (3 puntos), empate (1 punto) o derrota (0 puntos)
-			if(resultadoLocal > resultadoVisitante) {
-				// Gana el equipo local
-				equipoLocal.setPartidosGanados(equipoLocal.getPartidosGanados()+1);
-				equipoLocal.setPuntos(equipoLocal.getPuntos()+3);
-				equipoVisitante.setPartidosPerdidos(equipoVisitante.getPartidosPerdidos()+1);
-
-			}else if(resultadoLocal < resultadoVisitante) {
-				// Gana el equipo visitante
-				equipoVisitante.setPartidosGanados(equipoVisitante.getPartidosGanados()+1);
-				equipoVisitante.setPuntos(equipoVisitante.getPuntos()+3);
-				equipoLocal.setPartidosPerdidos(equipoLocal.getPartidosPerdidos()+1);
-
-			}else if(resultadoLocal == resultadoVisitante) {
-				// Empate de ambos equipos
-				equipoLocal.setPuntos(equipoLocal.getPuntos()+1);
-				equipoVisitante.setPuntos(equipoVisitante.getPuntos()+1);
-			}
-			
-			// Anotamos tarjetas del equipo local
-			for(Tarjeta tarjeta : partido.getEquipoLocal().getTarjetas()) {
-				for(Jugador jugador : equipoLocal.getJugadores()) {
-					if(jugador.getDorsal() == tarjeta.getDorsal()) {
-						if(tarjeta.getTipo() == "AMARILLA") {
-							jugador.setTarjetasAmarillas(jugador.getTarjetasAmarillas()+1);
-						}else if(tarjeta.getTipo() == "ROJA") {
-							jugador.setTarjetasRojas(jugador.getTarjetasRojas()+1);
+				// Obtenemos de la API Rest los datos del equipo local
+				equipoLocal = getEquipoRest(partido.getEquipoLocal().getNombre());
+				
+				// Obtenemos de la API Rest los datos del equipo visitante
+				equipoVisitante = getEquipoRest(partido.getEquipoVisitante().getNombre());
+				
+				// Anotamos el partido jugado
+				equipoLocal.setPartidosJugados(equipoLocal.getPartidosJugados()+1);
+				equipoVisitante.setPartidosJugados(equipoVisitante.getPartidosJugados()+1);
+				
+				// Anotamos el resultado en base a victoria (3 puntos), empate (1 punto) o derrota (0 puntos)
+				if(resultadoLocal > resultadoVisitante) {
+					// Gana el equipo local
+					equipoLocal.setPartidosGanados(equipoLocal.getPartidosGanados()+1);
+					equipoLocal.setPuntos(equipoLocal.getPuntos()+3);
+					equipoVisitante.setPartidosPerdidos(equipoVisitante.getPartidosPerdidos()+1);
+	
+				}else if(resultadoLocal < resultadoVisitante) {
+					// Gana el equipo visitante
+					equipoVisitante.setPartidosGanados(equipoVisitante.getPartidosGanados()+1);
+					equipoVisitante.setPuntos(equipoVisitante.getPuntos()+3);
+					equipoLocal.setPartidosPerdidos(equipoLocal.getPartidosPerdidos()+1);
+	
+				}else if(resultadoLocal == resultadoVisitante) {
+					// Empate de ambos equipos
+					equipoLocal.setPuntos(equipoLocal.getPuntos()+1);
+					equipoVisitante.setPuntos(equipoVisitante.getPuntos()+1);
+				}
+				
+				// Anotamos tarjetas del equipo local
+				for(Tarjeta tarjeta : partido.getEquipoLocal().getTarjetas()) {
+					for(Jugador jugador : equipoLocal.getJugadores()) {
+						if(jugador.getDorsal() == tarjeta.getDorsal()) {
+							if(tarjeta.getTipo() == "AMARILLA") {
+								jugador.setTarjetasAmarillas(jugador.getTarjetasAmarillas()+1);
+							}else if(tarjeta.getTipo() == "ROJA") {
+								jugador.setTarjetasRojas(jugador.getTarjetasRojas()+1);
+							}
 						}
 					}
 				}
-			}
-			
-			// Anotamos tarjetas del equipo visitante
-			for(Tarjeta tarjeta : partido.getEquipoVisitante().getTarjetas()) {
-				for(Jugador jugador : equipoVisitante.getJugadores()) {
-					if(jugador.getDorsal() == tarjeta.getDorsal()) {
-						if(tarjeta.getTipo() == "AMARILLA") {
-							jugador.setTarjetasAmarillas(jugador.getTarjetasAmarillas()+1);
-						}else if(tarjeta.getTipo() == "ROJA") {
-							jugador.setTarjetasRojas(jugador.getTarjetasRojas()+1);
+				
+				// Anotamos tarjetas del equipo visitante
+				for(Tarjeta tarjeta : partido.getEquipoVisitante().getTarjetas()) {
+					for(Jugador jugador : equipoVisitante.getJugadores()) {
+						if(jugador.getDorsal() == tarjeta.getDorsal()) {
+							if(tarjeta.getTipo() == "AMARILLA") {
+								jugador.setTarjetasAmarillas(jugador.getTarjetasAmarillas()+1);
+							}else if(tarjeta.getTipo() == "ROJA") {
+								jugador.setTarjetasRojas(jugador.getTarjetasRojas()+1);
+							}
 						}
 					}
 				}
-			}
-			
-			// Anotamos goles del equipo local
-			for(Gol gol : partido.getEquipoLocal().getGoles()) {
-				for(Jugador jugador : equipoLocal.getJugadores()) {
-					if(jugador.getDorsal() == gol.getDorsal()) {
-						jugador.setGoles(jugador.getGoles()+1);
+				
+				// Anotamos goles del equipo local
+				for(Gol gol : partido.getEquipoLocal().getGoles()) {
+					for(Jugador jugador : equipoLocal.getJugadores()) {
+						if(jugador.getDorsal() == gol.getDorsal()) {
+							jugador.setGoles(jugador.getGoles()+1);
+						}
 					}
 				}
-			}
-			
-			// Anotamos goles del equipo visitante
-			for(Gol gol : partido.getEquipoVisitante().getGoles()) {
-				for(Jugador jugador : equipoVisitante.getJugadores()) {
-					if(jugador.getDorsal() == gol.getDorsal()) {
-						jugador.setGoles(jugador.getGoles()+1);
+				
+				// Anotamos goles del equipo visitante
+				for(Gol gol : partido.getEquipoVisitante().getGoles()) {
+					for(Jugador jugador : equipoVisitante.getJugadores()) {
+						if(jugador.getDorsal() == gol.getDorsal()) {
+							jugador.setGoles(jugador.getGoles()+1);
+						}
 					}
 				}
+				
+				// Actualizamos resultados a través de la API REST
+				putEquipoRest(equipoLocal);
+				putEquipoRest(equipoVisitante);
 			}
-			
-			// Actualizamos resultados a través de la API REST
-			putEquipoRest(equipoLocal);
-			putEquipoRest(equipoVisitante);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 	}
@@ -130,7 +136,7 @@ public class Cliente {
 		return jornada;
 	}
 	
-	private static Equipo getEquipoRest(String nombre) {
+	private static Equipo getEquipoRest(String nombre) throws Exception {
 		// Invocación API REST
 		Client client = ClientBuilder.newClient();
 		WebTarget base = client.target(BASE_API_LIGA);
@@ -146,17 +152,17 @@ public class Cliente {
 				equipo = response.readEntity(Equipo.class);
 				break;
 			case 404:
-				System.out.printf("El equipo %s no existe%n", nombre);
-				break;
+				String errorNotFound = String.format("El equipo %s no existe%n", nombre);
+				throw new Exception(errorNotFound);
 			default:
-				System.out.println("Se ha producido un error");
-				break;
+				String generalError = String.format("Se ha producido un error %d al actualizar el equipo %s%n", response.getStatus(), nombre);
+				throw new Exception(generalError);
 		}
 		
 		return equipo;
 	}
 	
-	private static void putEquipoRest(Equipo equipo) {
+	private static void putEquipoRest(Equipo equipo) throws Exception {
 		// Invocación API REST
 		Client client = ClientBuilder.newClient();
 		WebTarget base = client.target(BASE_API_LIGA);
@@ -170,11 +176,11 @@ public class Cliente {
 				System.out.printf("Equipo %s actualizado correctmente%n", equipo.getNombre());
 				break;
 			case 404:
-				System.out.printf("El equipo %s no existe%n", equipo.getNombre());
-				break;
+				String notFoundError = String.format("El equipo %s no existe%n", equipo.getNombre());
+				throw new Exception(notFoundError);
 			default:
-				System.out.println("Se ha producido un error");
-				break;
+				String generalError = String.format("Se ha producido un error %d al actualizar el equipo %s%n", response.getStatus(), equipo.getNombre());
+				throw new Exception(generalError);
 		}
 	}
 
