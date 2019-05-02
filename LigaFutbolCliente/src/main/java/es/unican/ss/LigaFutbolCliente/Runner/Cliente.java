@@ -173,7 +173,7 @@ public class Cliente {
 		// Tratamiento de la respuesta
 		switch(response.getStatus()) {
 			case 200:
-				System.out.printf("Equipo %s actualizado correctmente%n", equipo.getNombre());
+				System.out.printf("Equipo %s actualizado correctamente%n", equipo.getNombre());
 				break;
 			case 404:
 				String notFoundError = String.format("El equipo %s no existe%n", equipo.getNombre());
