@@ -1,6 +1,8 @@
 package es.unican.ss.LigaFutbol.dao;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,10 +133,11 @@ public class LigaDAOImp implements ILigaDAO {
 		// Procesamos el documento (unmarshall)
 		try {
 			jaxbctx = JAXBContext.newInstance(Liga.class);
-			InputStream ligaXml = this.getClass().getClassLoader().getResourceAsStream("primeraDivision.xml");
+			InputStream ligaXml = null;
+			ligaXml = new FileInputStream("/Users/fernando/Desktop/primeraDivision.xml");
 			unmarshaller = jaxbctx.createUnmarshaller();
 			liga = (Liga) unmarshaller.unmarshal(ligaXml);
-		} catch (JAXBException e) {
+		} catch (JAXBException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		return liga;
@@ -153,7 +156,7 @@ public class LigaDAOImp implements ILigaDAO {
 		try {
 			jaxbctx = JAXBContext.newInstance(Liga.class);
 			marshaller = jaxbctx.createMarshaller();
-			marshaller.marshal(liga, new File(this.getClass().getResource("primeraDivision.xml").getPath()));
+			marshaller.marshal(liga, new File("/Users/fernando/Desktop/primeraDivision.xml"));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
