@@ -14,6 +14,8 @@ import es.unican.ss.LigaFutbol.dao.ILigaDAO;
 import es.unican.ss.LigaFutbol.dao.LigaDAOImp;
 import es.unican.ss.LigaFutbol.domain.Equipo;
 import es.unican.ss.LigaFutbol.domain.Jugador;
+import es.unican.ss.LigaFutbol.domain.ListaEquipos;
+import es.unican.ss.LigaFutbol.domain.ListaJugadores;
 
 @Path("/liga")
 public class LigaREST {
@@ -36,7 +38,7 @@ public class LigaREST {
 		List<Equipo> listaEquipos = ligaDAO.getEquipos();
 		if(!listaEquipos.isEmpty()) {
 			Collections.sort(listaEquipos);
-			builder = Response.ok(listaEquipos);
+			builder = Response.ok(new ListaEquipos(listaEquipos));
 			return builder.build();	
 		}
 		builder = Response.status(Response.Status.NOT_FOUND);
@@ -211,7 +213,7 @@ public class LigaREST {
 		}
 
 		Collections.sort(jugadores);
-		builder = Response.ok(jugadores);
+		builder = Response.ok(new ListaJugadores(jugadores));
 		return builder.build();
 	}
 }
