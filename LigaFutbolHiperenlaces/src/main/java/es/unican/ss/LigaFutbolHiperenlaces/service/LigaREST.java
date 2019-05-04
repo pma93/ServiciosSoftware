@@ -14,8 +14,6 @@ import es.unican.ss.LigaFutbolHiperenlaces.dao.ILigaDAO;
 import es.unican.ss.LigaFutbolHiperenlaces.dao.LigaDAOImp;
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Equipo;
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
-import es.unican.ss.LigaFutbolHiperenlaces.domain.ListaEquipos;
-import es.unican.ss.LigaFutbolHiperenlaces.domain.ListaJugadores;
 
 @Path("/liga")
 public class LigaREST {
@@ -31,14 +29,15 @@ public class LigaREST {
 	 */
 	@GET
 	@Produces({"application/xml","application/json"})
-	public Response getClasificacionLiga() {
-		
+	public Response getClasificacionLiga(@Context UriInfo uriInfo, @QueryParam("indiceIni") @DefaultValue("0") int indiceIni) {
+
 		Response.ResponseBuilder builder;
-		
 		List<Equipo> listaEquipos = ligaDAO.getEquipos();
+
 		if(!listaEquipos.isEmpty()) {
 			Collections.sort(listaEquipos);
-			builder = Response.ok(new ListaEquipos(listaEquipos));
+			ClasificacionRepresentation cp = new ClasificacionRepresentation(listaEquipos, uriInfo, indiceIni);
+			builder = Response.ok(cp);
 			return builder.build();	
 		}
 		builder = Response.status(Response.Status.NOT_FOUND);
@@ -96,17 +95,17 @@ public class LigaREST {
 	@Produces({"application/xml","application/json"})
 	public Response addJugadorEquipo(@PathParam("nombreEquipo") String equipo, 
 			@Context UriInfo uriInfo, Jugador jugador) {
-		
+
 		Response.ResponseBuilder builder;
 		Equipo eq = ligaDAO.getEquipo(equipo);
 		Jugador jug = ligaDAO.getJugador(equipo, jugador.getDorsal());
-		
+
 		// Si existe ya, se produce conflicto
 		if(jug != null) {
 			builder = Response.status(Response.Status.CONFLICT);
 			return builder.build();
 		}
-		
+
 		// Si no existe ya, se añade
 		if(eq.getJugadores().add(jugador)) {
 			ligaDAO.actualizaEquipo(eq);
@@ -115,10 +114,10 @@ public class LigaREST {
 		}else {
 			builder = Response.serverError();
 		}
-		
+
 		return builder.build();
 	}
-	
+
 	/**
 	 * Consultar datos de un jugador (GET)
 	 */
@@ -130,7 +129,7 @@ public class LigaREST {
 
 		Response.ResponseBuilder builder;
 		Jugador jugador = ligaDAO.getJugador(equipo, dorsal);
-		
+
 		if(jugador != null) {
 			builder = Response.ok(jugador);
 			return builder.build();
@@ -150,19 +149,19 @@ public class LigaREST {
 	@Produces({"application/xml","application/json"})
 	public Response updateJugador(@PathParam("nombreEquipo") String equipo,
 			@PathParam("dorsal") int dorsal, Jugador jugador) {
-		
+
 		Response.ResponseBuilder builder;
 		Jugador jug = ligaDAO.getJugador(equipo, dorsal);
-		
+
 		if(ligaDAO.actualizaJugador(equipo, jugador) != null) {
 			builder = Response.ok(jug);
 			return builder.build();
 		}
-		
+
 		builder = Response.status(Response.Status.NOT_FOUND);
 		return builder.build();
 	}
-	
+
 	/**
 	 * Eliminar un jugador de un equipo (DELETE)
 	 */
@@ -175,7 +174,7 @@ public class LigaREST {
 		Response.ResponseBuilder builder;
 		Equipo eq = ligaDAO.getEquipo(equipo);
 		Jugador jug = ligaDAO.getJugador(equipo, dorsal);
-		
+
 		if(eq.getJugadores().remove(jug)) {
 			ligaDAO.actualizaEquipo(eq);
 			builder = Response.ok(jug);
@@ -192,12 +191,13 @@ public class LigaREST {
 	@GET
 	@Path("/goleadores")
 	@Produces({"application/xml","application/json"})
-	public Response getRankingGoleadores(@QueryParam("equipo") String equipo) {
-				
+	public Response getRankingGoleadores(@QueryParam("equipo") String equipo, 
+			@QueryParam("indiceIni") @DefaultValue("0") int indiceIni, @Context UriInfo uriInfo) {
+
 		Response.ResponseBuilder builder;
 		
 		List<Jugador> jugadores = new ArrayList<Jugador>();
-		
+
 		if(equipo != null) {
 			// Ranking de goleadores de un equipo
 			Equipo eq = ligaDAO.getEquipo(equipo);
@@ -213,7 +213,8 @@ public class LigaREST {
 		}
 
 		Collections.sort(jugadores);
-		builder = Response.ok(new ListaJugadores(jugadores));
+		RankingRepresentation rp = new RankingRepresentation(jugadores, uriInfo, indiceIni);
+		builder = Response.ok(rp);
 		return builder.build();
 	}
 }
