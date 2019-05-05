@@ -134,7 +134,7 @@ public class LigaDAOImp implements ILigaDAO {
 		try {
 			jaxbctx = JAXBContext.newInstance(Liga.class);
 			InputStream ligaXml = null;
-			ligaXml = new FileInputStream("/Users/fernando/Desktop/primeraDivision.xml");
+			ligaXml = new FileInputStream("/Users/pablomartinezarana/Desktop/primeraDivision.xml");
 			unmarshaller = jaxbctx.createUnmarshaller();
 			liga = (Liga) unmarshaller.unmarshal(ligaXml);
 		} catch (JAXBException | FileNotFoundException e) {
@@ -156,7 +156,7 @@ public class LigaDAOImp implements ILigaDAO {
 		try {
 			jaxbctx = JAXBContext.newInstance(Liga.class);
 			marshaller = jaxbctx.createMarshaller();
-			marshaller.marshal(liga, new File("/Users/fernando/Desktop/primeraDivision.xml"));
+			marshaller.marshal(liga, new File("/Users/pablomartinezarana/Desktop/primeraDivision.xml"));
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
