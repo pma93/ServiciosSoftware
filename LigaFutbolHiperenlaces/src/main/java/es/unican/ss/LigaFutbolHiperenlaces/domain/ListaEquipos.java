@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="equipos")
+@XmlRootElement(name="clasificacion")
 public class ListaEquipos {
 
 	private List<Equipo> equipos;

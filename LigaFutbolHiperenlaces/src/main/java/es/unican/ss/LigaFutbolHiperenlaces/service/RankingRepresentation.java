@@ -5,14 +5,12 @@ import java.util.List;
 
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
 
-@XmlRootElement(name="goleadores")
 public class RankingRepresentation {
 
-	private List<AtomLink> jugadoresToReturn;
+	private List<NestedJugador> jugadoresToReturn;
 	private AtomLink next;
 	private AtomLink previous;
 
@@ -22,27 +20,23 @@ public class RankingRepresentation {
 		String siguienteIndice = Integer.toString(indiceIni+5);
 		String nextURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", siguienteIndice).toString();
 		next = new AtomLink("next",nextURI);
-		
-		// indice previous
-		String anteriorIndice = Integer.toString(indiceIni-5);
-		String previousURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", anteriorIndice).toString();
-		previous = new AtomLink("previous",previousURI);
-		
-		jugadoresToReturn = new ArrayList<AtomLink>();
+			
+		jugadoresToReturn = new ArrayList<NestedJugador>();
 
-		for(int i=indiceIni; i<indiceIni+5; i++) {
+		for(int i=indiceIni; i<Math.min(indiceIni+5, jugadores.size()); i++) {
 			Jugador j = jugadores.get(i);
 			int dorsal = j.getDorsal();
-			jugadoresToReturn.add(new AtomLink("jugador",uriInfo.getBaseUriBuilder().path("liga/"+"goleadores/"+dorsal).build().toString()));
+			NestedJugador nestedJug = new NestedJugador(Integer.toString(dorsal), uriInfo);
+			jugadoresToReturn.add(nestedJug);
 		}
 	}
 	
 	@XmlElement
-	public List<AtomLink> getJugadores() {
+	public List<NestedJugador> getJugadores() {
 		return jugadoresToReturn;
 	}
 	
-	public void setJugadores(List<AtomLink> jugadoresToReturn) {
+	public void setJugadores(List<NestedJugador> jugadoresToReturn) {
 		this.jugadoresToReturn = jugadoresToReturn;
 	}
 	

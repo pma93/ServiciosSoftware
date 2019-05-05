@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="jugadores")
+@XmlRootElement(name="ranking")
 public class ListaJugadores {
 
 	private List<Jugador> jugadores;

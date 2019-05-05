@@ -1,18 +1,18 @@
 package es.unican.ss.LigaFutbolHiperenlaces.service;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Equipo;
+import es.unican.ss.LigaFutbolHiperenlaces.service.AtomLink;
 
-@XmlRootElement(name="liga")
 public class ClasificacionRepresentation {
 
-	private List<NestedEquipo> equiposToReturn;
+	private List<AtomLink> equiposToReturn;
 	private AtomLink previous;
 	private AtomLink next;
 
@@ -23,18 +23,16 @@ public class ClasificacionRepresentation {
 		String nextURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", siguienteIndice).toString();
 		next = new AtomLink("next",nextURI);
 		
-		// indice previous
-		String anteriorIndice = Integer.toString(indiceIni-5);
-		String previousURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", anteriorIndice).toString();
-		previous = new AtomLink("previous",previousURI);
+		AtomLink atomLink = null;
+		URI uri = null;
+		equiposToReturn = new ArrayList<AtomLink>();
 		
-		equiposToReturn = new ArrayList<NestedEquipo>();
-
-		for(int i=indiceIni; i<indiceIni+5; i++) {
+		for(int i=indiceIni; i<Math.min(indiceIni+5, equipos.size()); i++) {
 			Equipo eq = equipos.get(i);
 			String nombreEq = eq.getNombre();
-			NestedEquipo nestedEq = new NestedEquipo(nombreEq, uriInfo);
-			equiposToReturn.add(nestedEq);
+			uri = uriInfo.getAbsolutePathBuilder().path(nombreEq).build();
+			atomLink = new AtomLink("equipo", uri.toString());
+			equiposToReturn.add(atomLink);
 		}
 	}
 
@@ -57,11 +55,11 @@ public class ClasificacionRepresentation {
 	}
 
 	@XmlElement
-	public List<NestedEquipo> getEquipos() {
+	public List<AtomLink> getEquipos() {
 		return equiposToReturn;
 	}
 
-	public void setEquipos(List<NestedEquipo> equiposToReturn) {
+	public void setEquipos(List<AtomLink> equiposToReturn) {
 		this.equiposToReturn = equiposToReturn;
 	}
 }

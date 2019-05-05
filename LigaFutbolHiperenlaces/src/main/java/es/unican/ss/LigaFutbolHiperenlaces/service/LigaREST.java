@@ -14,6 +14,7 @@ import es.unican.ss.LigaFutbolHiperenlaces.dao.ILigaDAO;
 import es.unican.ss.LigaFutbolHiperenlaces.dao.LigaDAOImp;
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Equipo;
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
+import es.unican.ss.LigaFutbolHiperenlaces.domain.ListaJugadores;
 
 @Path("/liga")
 public class LigaREST {
@@ -29,7 +30,7 @@ public class LigaREST {
 	 */
 	@GET
 	@Produces({"application/xml","application/json"})
-	public Response getClasificacionLiga(@Context UriInfo uriInfo, @QueryParam("indiceIni") @DefaultValue("0") int indiceIni) {
+	public Response getClasificacionLiga(@Context UriInfo uriInfo, @QueryParam("indiceIni") int indiceIni) {
 
 		Response.ResponseBuilder builder;
 		List<Equipo> listaEquipos = ligaDAO.getEquipos();
@@ -192,17 +193,20 @@ public class LigaREST {
 	@Path("/goleadores")
 	@Produces({"application/xml","application/json"})
 	public Response getRankingGoleadores(@QueryParam("equipo") String equipo, 
-			@QueryParam("indiceIni") @DefaultValue("0") int indiceIni, @Context UriInfo uriInfo) {
+			@QueryParam("indiceIni") int indiceIni, @Context UriInfo uriInfo) {
 
 		Response.ResponseBuilder builder;
 		
 		List<Jugador> jugadores = new ArrayList<Jugador>();
-
+		
 		if(equipo != null) {
 			// Ranking de goleadores de un equipo
 			Equipo eq = ligaDAO.getEquipo(equipo);
 			if(eq != null) {
 				jugadores = eq.getJugadores();
+				Collections.sort(jugadores);
+				builder = Response.ok(new ListaJugadores(jugadores));
+				return builder.build();
 			}else {
 				builder = Response.status(Response.Status.NOT_FOUND);
 				return builder.build();	
