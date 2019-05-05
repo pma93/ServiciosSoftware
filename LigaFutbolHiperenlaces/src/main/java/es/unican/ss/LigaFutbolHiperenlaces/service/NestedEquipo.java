@@ -2,19 +2,19 @@ package es.unican.ss.LigaFutbolHiperenlaces.service;
 
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import es.unican.ss.LigaFutbolHiperenlaces.service.AtomLink;
+@XmlRootElement(name="equipo")
+public class NestedEquipo {
 
-public class NestedJugador {
-	
 	private String nombre;
 	private AtomLink self;
-	
-	public NestedJugador() {}
 
-	public NestedJugador(String nombre, int dorsal, UriInfo uriInfo) {
-		this.setNombre(nombre);
-		String selfURI = uriInfo.getAbsolutePathBuilder().path(Integer.toString(dorsal)).toString();
+	public NestedEquipo() {}
+
+	public NestedEquipo(String nombreEquipo, UriInfo uriInfo) {
+		this.setNombre(nombreEquipo);
+		String selfURI = uriInfo.getAbsolutePathBuilder().path(nombreEquipo).toString();
 		self = new AtomLink("self", selfURI);
 	}
 
@@ -35,4 +35,5 @@ public class NestedJugador {
 	public void setSelf(AtomLink self) {
 		this.self = self;
 	}
+	
 }

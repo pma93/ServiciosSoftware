@@ -1,42 +1,56 @@
 package es.unican.ss.LigaFutbolHiperenlaces.service;
 
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Equipo;
 import es.unican.ss.LigaFutbolHiperenlaces.service.AtomLink;
 
+@XmlRootElement(name="clasificacion")
 public class ClasificacionRepresentation {
 
-	private List<AtomLink> equiposToReturn;
+	private NestedEquipo equipoNested;
 	private AtomLink previous;
 	private AtomLink next;
+	private AtomLink self;
 
+	public ClasificacionRepresentation() {}
+	
 	public ClasificacionRepresentation(List<Equipo> equipos, UriInfo uriInfo, int indiceIni) {
 
-		// indice next
-		String siguienteIndice = Integer.toString(indiceIni+5);
-		String nextURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", siguienteIndice).toString();
-		next = new AtomLink("next",nextURI);
-		
-		AtomLink atomLink = null;
-		URI uri = null;
-		equiposToReturn = new ArrayList<AtomLink>();
-		
-		for(int i=indiceIni; i<Math.min(indiceIni+5, equipos.size()); i++) {
-			Equipo eq = equipos.get(i);
-			String nombreEq = eq.getNombre();
-			uri = uriInfo.getAbsolutePathBuilder().path(nombreEq).build();
-			atomLink = new AtomLink("equipo", uri.toString());
-			equiposToReturn.add(atomLink);
+		if(indiceIni >= 0 && indiceIni <= equipos.size()-1) {
+			
+			// Indices anterior y siguiente
+			int previousIndex = indiceIni - 1;
+			int nextIndex = indiceIni+1;
+			
+			// Crear enlace anterior solo si existe
+			if(previousIndex >= 0) {
+				String previousURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", previousIndex).toString();
+				previous = new AtomLink("previous", previousURI);	
+			}
+			
+			// Crear enlace siguiente solo si existe
+			if(nextIndex <= equipos.size()-1) {
+				String nextURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", nextIndex).toString();
+				next = new AtomLink("next", nextURI);
+			}
+			
+			// Crear siempre enlace propio 
+			String selfURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", indiceIni).toString();
+			self = new AtomLink("self", selfURI);
+
+			// Crear representación equipo
+			Equipo eq = equipos.get(indiceIni);
+			equipoNested = new NestedEquipo(eq.getNombre(), uriInfo);
 		}
+
 	}
 
-	@XmlElement
+	@XmlElement(name="link")
 	public AtomLink getPrevious() {
 		return previous;
 	}
@@ -45,7 +59,7 @@ public class ClasificacionRepresentation {
 		this.previous = previous;
 	}
 
-	@XmlElement
+	@XmlElement(name="link")
 	public AtomLink getNext() {
 		return next;
 	}
@@ -54,12 +68,21 @@ public class ClasificacionRepresentation {
 		this.next = next;
 	}
 
-	@XmlElement
-	public List<AtomLink> getEquipos() {
-		return equiposToReturn;
+	@XmlElement(name="link")
+	public AtomLink getSelf() {
+		return self;
 	}
 
-	public void setEquipos(List<AtomLink> equiposToReturn) {
-		this.equiposToReturn = equiposToReturn;
+	public void setSelf(AtomLink self) {
+		this.self = self;
+	}
+	
+	@XmlElement(name="equipo")
+	public NestedEquipo getEquipo() {
+		return equipoNested;
+	}
+
+	public void setEquipo(NestedEquipo equipoNested) {
+		this.equipoNested = equipoNested;
 	}
 }

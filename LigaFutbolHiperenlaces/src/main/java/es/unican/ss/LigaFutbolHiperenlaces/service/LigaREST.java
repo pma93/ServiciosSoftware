@@ -14,7 +14,6 @@ import es.unican.ss.LigaFutbolHiperenlaces.dao.ILigaDAO;
 import es.unican.ss.LigaFutbolHiperenlaces.dao.LigaDAOImp;
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Equipo;
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
-import es.unican.ss.LigaFutbolHiperenlaces.domain.ListaJugadores;
 
 @Path("/liga")
 public class LigaREST {
@@ -37,8 +36,7 @@ public class LigaREST {
 
 		if(!listaEquipos.isEmpty()) {
 			Collections.sort(listaEquipos);
-			ClasificacionRepresentation cp = new ClasificacionRepresentation(listaEquipos, uriInfo, indiceIni);
-			builder = Response.ok(cp);
+			builder = Response.ok(new ClasificacionRepresentation(listaEquipos, uriInfo, indiceIni));
 			return builder.build();	
 		}
 		builder = Response.status(Response.Status.NOT_FOUND);
@@ -51,13 +49,13 @@ public class LigaREST {
 	@GET
 	@Path("/{nombreEquipo}")
 	@Produces({"application/xml","application/json"})
-	public Response getDatosEquipo(@PathParam("nombreEquipo") String equipo) {
+	public Response getDatosEquipo(@Context UriInfo uriInfo, @PathParam("nombreEquipo") String equipo) {
 
 		Response.ResponseBuilder builder;
 		Equipo eq = ligaDAO.getEquipo(equipo);
 
 		if(eq != null) {
-			builder = Response.ok(eq);
+			builder = Response.ok(new EquipoRepresentation(eq, uriInfo));
 			return builder.build();
 		}
 
@@ -125,14 +123,14 @@ public class LigaREST {
 	@GET
 	@Path("/{nombreEquipo}/{dorsal}")
 	@Produces({"application/xml","application/json"})
-	public Response getDatosJugador(@PathParam("nombreEquipo") String equipo,
+	public Response getDatosJugador(@Context UriInfo uriInfo, @PathParam("nombreEquipo") String equipo,
 			@PathParam("dorsal") int dorsal) {
 
 		Response.ResponseBuilder builder;
 		Jugador jugador = ligaDAO.getJugador(equipo, dorsal);
 
 		if(jugador != null) {
-			builder = Response.ok(jugador);
+			builder = Response.ok(new JugadorRepresentation(jugador, uriInfo));
 			return builder.build();
 		}
 
@@ -205,7 +203,7 @@ public class LigaREST {
 			if(eq != null) {
 				jugadores = eq.getJugadores();
 				Collections.sort(jugadores);
-				builder = Response.ok(new ListaJugadores(jugadores));
+				builder = Response.ok(new RankingRepresentation(jugadores, uriInfo, indiceIni));
 				return builder.build();
 			}else {
 				builder = Response.status(Response.Status.NOT_FOUND);
