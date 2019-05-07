@@ -1,5 +1,6 @@
 package es.unican.ss.LigaFutbolHiperenlaces.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.UriInfo;
@@ -11,7 +12,7 @@ import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
 @XmlRootElement(name="ranking")
 public class RankingRepresentation {
 
-	private NestedJugador jugadorNested;
+	private List<NestedJugador> jugadoresToReturn;
 	private AtomLink previous;
 	private AtomLink next;
 	private AtomLink self;
@@ -20,11 +21,13 @@ public class RankingRepresentation {
 
 	public RankingRepresentation(List<Jugador> jugadores, UriInfo uriInfo, int indiceIni) {
 		
-		if(indiceIni >= 0 && indiceIni <= jugadores.size()-1) {
+		jugadoresToReturn = new ArrayList<NestedJugador>();
+		
+		for(int i=indiceIni; i<indiceIni+3; i++) {
 			
 			// Indices anterior y siguiente
-			int previousIndex = indiceIni - 1;
-			int nextIndex = indiceIni+1;
+			int previousIndex = indiceIni - 3;
+			int nextIndex = indiceIni+3;
 			
 			// Crear enlace anterior solo si existe
 			if(previousIndex >= 0) {
@@ -42,9 +45,11 @@ public class RankingRepresentation {
 			String selfURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", indiceIni).toString();
 			setSelf(new AtomLink("self", selfURI));
 
-			// Crear representación equipo
-			Jugador jugador = jugadores.get(indiceIni);
-			jugadorNested = new NestedJugador(jugador.getNombre(), jugador.getDorsal(), uriInfo);
+			// Crear representación jugador
+			Jugador jugador = jugadores.get(i);
+			String nombrejug = jugador.getNombre();
+			int dorsalJug = jugador.getDorsal();
+			jugadoresToReturn.add(new NestedJugador(nombrejug, dorsalJug, uriInfo));
 		}
 	}
 	
@@ -74,13 +79,13 @@ public class RankingRepresentation {
 	public void setSelf(AtomLink self) {
 		this.self = self;
 	}
-	
+
 	@XmlElement(name="jugador")
-	public NestedJugador getJugador() {
-		return jugadorNested;
+	public List<NestedJugador> getJugadoresToReturn() {
+		return jugadoresToReturn;
 	}
-	
-	public void setJugador(NestedJugador jugadoresToReturn) {
-		this.jugadorNested = jugadoresToReturn;
+
+	public void setJugadoresToReturn(List<NestedJugador> jugadoresToReturn) {
+		this.jugadoresToReturn = jugadoresToReturn;
 	}
 }

@@ -110,7 +110,7 @@ public class LigaREST {
 		// Si no existe ya, se añade
 		if(eq.getJugadores().add(jugador)) {
 			ligaDAO.actualizaEquipo(eq);
-			URI location = uriInfo.getAbsolutePathBuilder().build(); // TODO: revisar path
+			URI location = uriInfo.getAbsolutePathBuilder().build(); 
 			builder = Response.created(location);
 		}else {
 			builder = Response.serverError();

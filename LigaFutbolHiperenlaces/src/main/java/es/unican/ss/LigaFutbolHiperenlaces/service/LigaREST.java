@@ -29,14 +29,14 @@ public class LigaREST {
 	 */
 	@GET
 	@Produces({"application/xml","application/json"})
-	public Response getClasificacionLiga(@Context UriInfo uriInfo, @QueryParam("indiceIni") int indiceIni) {
+	public Response getClasificacionLiga(@Context UriInfo uriInfo) {
 
 		Response.ResponseBuilder builder;
 		List<Equipo> listaEquipos = ligaDAO.getEquipos();
 
 		if(!listaEquipos.isEmpty()) {
 			Collections.sort(listaEquipos);
-			builder = Response.ok(new ClasificacionRepresentation(listaEquipos, uriInfo, indiceIni));
+			builder = Response.ok(new ClasificacionRepresentation(listaEquipos, uriInfo));
 			return builder.build();	
 		}
 		builder = Response.status(Response.Status.NOT_FOUND);

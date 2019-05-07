@@ -1,5 +1,7 @@
 package es.unican.ss.LigaFutbolHiperenlaces.service;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.UriInfo;
@@ -12,60 +14,21 @@ import es.unican.ss.LigaFutbolHiperenlaces.service.AtomLink;
 @XmlRootElement(name="clasificacion")
 public class ClasificacionRepresentation {
 
-	private NestedEquipo equipoNested;
-	private AtomLink previous;
-	private AtomLink next;
+	private List<AtomLink> equiposToReturn;
 	private AtomLink self;
 
 	public ClasificacionRepresentation() {}
 	
-	public ClasificacionRepresentation(List<Equipo> equipos, UriInfo uriInfo, int indiceIni) {
+	public ClasificacionRepresentation(List<Equipo> equipos, UriInfo uriInfo) {
 
-		if(indiceIni >= 0 && indiceIni <= equipos.size()-1) {
-			
-			// Indices anterior y siguiente
-			int previousIndex = indiceIni - 1;
-			int nextIndex = indiceIni+1;
-			
-			// Crear enlace anterior solo si existe
-			if(previousIndex >= 0) {
-				String previousURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", previousIndex).toString();
-				previous = new AtomLink("previous", previousURI);	
-			}
-			
-			// Crear enlace siguiente solo si existe
-			if(nextIndex <= equipos.size()-1) {
-				String nextURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", nextIndex).toString();
-				next = new AtomLink("next", nextURI);
-			}
-			
-			// Crear siempre enlace propio 
-			String selfURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", indiceIni).toString();
-			self = new AtomLink("self", selfURI);
-
-			// Crear representación equipo
-			Equipo eq = equipos.get(indiceIni);
-			equipoNested = new NestedEquipo(eq.getNombre(), uriInfo);
+		AtomLink atomLink = null;
+		equiposToReturn = new ArrayList<AtomLink>();
+		
+		for(Equipo eq: equipos) {
+			URI uri = uriInfo.getAbsolutePathBuilder().path(eq.getNombre()).build();
+			atomLink = new AtomLink("self", uri.toString());
+			equiposToReturn.add(atomLink);
 		}
-
-	}
-
-	@XmlElement(name="link")
-	public AtomLink getPrevious() {
-		return previous;
-	}
-
-	public void setPrevious(AtomLink previous) {
-		this.previous = previous;
-	}
-
-	@XmlElement(name="link")
-	public AtomLink getNext() {
-		return next;
-	}
-
-	public void setNext(AtomLink next) {
-		this.next = next;
 	}
 
 	@XmlElement(name="link")
@@ -78,11 +41,11 @@ public class ClasificacionRepresentation {
 	}
 	
 	@XmlElement(name="equipo")
-	public NestedEquipo getEquipo() {
-		return equipoNested;
+	public List<AtomLink> getEquiposToReturn() {
+		return equiposToReturn;
 	}
 
-	public void setEquipo(NestedEquipo equipoNested) {
-		this.equipoNested = equipoNested;
+	public void setEquiposToReturn(List<AtomLink> equiposToReturn) {
+		this.equiposToReturn = equiposToReturn;
 	}
 }
