@@ -1,4 +1,4 @@
-EJEMPLO: http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga?indiceIni=1
+EJEMPLO: http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga
 <clasificacion>
 	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Atl%C3%A9tico%20de%20Madrid" rel="equipo" type="application/xml"/>
 	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/FC%20Barcelona" rel="equipo" type="application/xml"/>
