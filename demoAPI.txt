@@ -1,24 +1,29 @@
 EJEMPLO: http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga?indiceIni=1
 <clasificacion>
-	<equipo>
-		<nombre>FC Barcelona</nombre>
-		<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/FC%20Barcelona" rel="self" type="application/xml"/>
-	</equipo>
-	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga?indiceIni=2" rel="next" type="application/xml"/>
-	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga?indiceIni=0" rel="previous" type="application/xml"/>
-	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga?indiceIni=1" rel="self" type="application/xml"/>
+	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Atl%C3%A9tico%20de%20Madrid" rel="equipo" type="application/xml"/>
+	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/FC%20Barcelona" rel="equipo" type="application/xml"/>
+	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Real%20Madrid" rel="equipo" type="application/xml"/>
+	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Valencia%20CF" rel="equipo" type="application/xml"/>
 </clasificacion>
 
 
-EJEMPLO: http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores?indiceIni=1
+EJEMPLO: http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores?indiceIni=3
 <ranking>
 	<jugador>
-		<nombre>Torres</nombre>
-		<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores/2" rel="self" type="application/xml"/>
+		<nombre>Messi</nombre>
+		<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/FC%20Barcelona/2" rel="self" type="application/xml"/>
 	</jugador>
-	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores?indiceIni=2" rel="next" type="application/xml"/>
+	<jugador>
+		<nombre>Sergio Ramos</nombre>
+		<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Real%20Madrid/2" rel="self" type="application/xml"/>
+	</jugador>
+	<jugador>
+		<nombre>Keilor Navas</nombre>
+		<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Real%20Madrid/1" rel="self" type="application/xml"/>
+	</jugador>
+	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores?indiceIni=6" rel="next" type="application/xml"/>
 	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores?indiceIni=0" rel="previous" type="application/xml"/>
-	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores?indiceIni=1" rel="self" type="application/xml"/>
+	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/goleadores?indiceIni=3" rel="self" type="application/xml"/>
 </ranking>
 
 
@@ -51,5 +56,6 @@ EJEMPLO: http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Atl%C3
 	<goles>7</goles>
 	<tarjetasAmarillas>2</tarjetasAmarillas>
 	<tarjetasRojas>1</tarjetasRojas>
+	<nombreEquipo>Atlético de Madrid</nombreEquipo>
 	<link href="http://localhost:8080/LigaFutbolHiperenlaces-0.0.1-SNAPSHOT/liga/Atl%C3%A9tico%20de%20Madrid/2" rel="self" type="application/xml"/>
 </jugador>
