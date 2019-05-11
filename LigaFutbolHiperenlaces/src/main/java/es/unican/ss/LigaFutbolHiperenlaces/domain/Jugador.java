@@ -10,6 +10,7 @@ public class Jugador implements Comparable<Jugador>{
 	private int goles;
 	private int tarjetasAmarillas;
 	private int tarjetasRojas;
+	private String nombreEquipo;
 	
 	@XmlElement(name="nombre")
 	public String getNombre() {
@@ -54,6 +55,15 @@ public class Jugador implements Comparable<Jugador>{
 
 	public void setTarjetasRojas(int tarjetasRojas) {
 		this.tarjetasRojas = tarjetasRojas;
+	}
+	
+	@XmlElement(name="nombreEquipo")
+	public String getNombreEquipo() {
+		return nombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		this.nombreEquipo = nombreEquipo;
 	}
 	
 	public int compareTo(Jugador o) {

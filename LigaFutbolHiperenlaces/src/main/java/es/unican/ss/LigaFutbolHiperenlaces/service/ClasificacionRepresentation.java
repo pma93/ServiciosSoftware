@@ -26,7 +26,7 @@ public class ClasificacionRepresentation {
 		
 		for(Equipo eq: equipos) {
 			URI uri = uriInfo.getAbsolutePathBuilder().path(eq.getNombre()).build();
-			atomLink = new AtomLink("self", uri.toString());
+			atomLink = new AtomLink("equipo", uri.toString());
 			equiposToReturn.add(atomLink);
 		}
 	}
@@ -40,7 +40,7 @@ public class ClasificacionRepresentation {
 		this.self = self;
 	}
 	
-	@XmlElement(name="equipo")
+	@XmlElement(name="link")
 	public List<AtomLink> getEquiposToReturn() {
 		return equiposToReturn;
 	}

@@ -33,7 +33,7 @@ public class EquipoRepresentation {
 		this.jugadoresNested = new ListaJugadores(new ArrayList<NestedJugador>());
 		
 		for(Jugador jugador : equipo.getJugadores()) {
-			jugadoresNested.getJugadores().add(new NestedJugador(jugador.getNombre(), jugador.getDorsal(), uriInfo));
+			jugadoresNested.getJugadores().add(new NestedJugador(jugador.getNombre(), jugador.getNombreEquipo(), jugador.getDorsal(), uriInfo));
 		}
 		
 		// Crear enlace propio 

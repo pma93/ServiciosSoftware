@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
 
 @XmlRootElement(name="jugador")
-@XmlType(propOrder={"nombre", "dorsal", "goles", "tarjetasAmarillas", "tarjetasRojas", "self"})
+@XmlType(propOrder={"nombre", "dorsal", "goles", "tarjetasAmarillas", "tarjetasRojas", "nombreEquipo", "self"})
 public class JugadorRepresentation {
 
 	private String nombre;
@@ -16,6 +16,7 @@ public class JugadorRepresentation {
 	private int goles;
 	private int tarjetasAmarillas;
 	private int tarjetasRojas;
+	private String nombreEquipo;
 	private AtomLink self;
 	
 	public JugadorRepresentation() {}
@@ -26,6 +27,7 @@ public class JugadorRepresentation {
 		this.setGoles(jugador.getGoles());
 		this.setTarjetasAmarillas(jugador.getTarjetasAmarillas());
 		this.setTarjetasRojas(jugador.getTarjetasRojas());
+		this.setNombreEquipo(jugador.getNombreEquipo());
 		
 		// Crear enlace propio 
 		String selfURI = uriInfo.getAbsolutePathBuilder().toString();
@@ -79,6 +81,14 @@ public class JugadorRepresentation {
 
 	public void setTarjetasRojas(int tarjetasRojas) {
 		this.tarjetasRojas = tarjetasRojas;
+	}
+
+	public String getNombreEquipo() {
+		return nombreEquipo;
+	}
+
+	public void setNombreEquipo(String nombreEquipo) {
+		this.nombreEquipo = nombreEquipo;
 	}
 	
 }

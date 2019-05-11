@@ -12,6 +12,9 @@ import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
 @XmlRootElement(name="ranking")
 public class RankingRepresentation {
 
+	// Resultados a mostrar por página
+	private static final int RESULTS_PER_PAGE = 4;
+	
 	private List<NestedJugador> jugadoresToReturn;
 	private AtomLink previous;
 	private AtomLink next;
@@ -21,35 +24,43 @@ public class RankingRepresentation {
 
 	public RankingRepresentation(List<Jugador> jugadores, UriInfo uriInfo, int indiceIni) {
 		
-		jugadoresToReturn = new ArrayList<NestedJugador>();
+		int numResults = jugadores.size();
 		
-		for(int i=indiceIni; i<indiceIni+3; i++) {
-			
-			// Indices anterior y siguiente
-			int previousIndex = indiceIni - 3;
-			int nextIndex = indiceIni+3;
+		// Página actual comenzando por cero
+		int currentPage = (int) Math.floor(indiceIni / RESULTS_PER_PAGE);
+		// Índice para el comienzo de la página actual
+		int currentIndex = currentPage * RESULTS_PER_PAGE;
+		
+		// Si el indice solicitado es válido, se calculan los resultados en base a dicha posición
+		if(indiceIni >= 0 && indiceIni < numResults) {
 			
 			// Crear enlace anterior solo si existe
+			int previousIndex = currentIndex - RESULTS_PER_PAGE;
 			if(previousIndex >= 0) {
 				String previousURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", previousIndex).toString();
 				previous = new AtomLink("previous", previousURI);	
 			}
 			
 			// Crear enlace siguiente solo si existe
-			if(nextIndex <= jugadores.size()-1) {
+			int nextIndex = currentIndex + RESULTS_PER_PAGE;
+			if(nextIndex < numResults) {
 				String nextURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", nextIndex).toString();
 				next = new AtomLink("next", nextURI);
 			}
 			
-			// Crear siempre enlace propio 
-			String selfURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", indiceIni).toString();
+			// Crear siempre enlace propio
+			int selfIndex = currentIndex;
+			String selfURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", selfIndex).toString();
 			setSelf(new AtomLink("self", selfURI));
-
-			// Crear representación jugador
-			Jugador jugador = jugadores.get(i);
-			String nombrejug = jugador.getNombre();
-			int dorsalJug = jugador.getDorsal();
-			jugadoresToReturn.add(new NestedJugador(nombrejug, dorsalJug, uriInfo));
+			
+			// Crear representación de jugadores
+			int resultsLeft = (numResults - indiceIni);
+			int resultsToShow = resultsLeft < RESULTS_PER_PAGE ? resultsLeft : RESULTS_PER_PAGE; 
+			jugadoresToReturn = new ArrayList<NestedJugador>();
+			for(int i = indiceIni; i < indiceIni + resultsToShow; i++) {
+				Jugador jugador = jugadores.get(i);
+				jugadoresToReturn.add(new NestedJugador(jugador.getNombre(), jugador.getNombreEquipo(), jugador.getDorsal(), uriInfo));
+			}
 		}
 	}
 	
