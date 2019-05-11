@@ -1,6 +1,8 @@
 package es.unican.ss.LigaFutbolCliente.Runner;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -18,7 +20,9 @@ import es.unican.ss.LigaFutbolCliente.jornadadomain.Jornada;
 import es.unican.ss.LigaFutbolCliente.jornadadomain.Partido;
 import es.unican.ss.LigaFutbolCliente.jornadadomain.Tarjeta;
 import es.unican.ss.LigaFutbolCliente.restdomain.Equipo;
+import es.unican.ss.LigaFutbolCliente.restdomain.EquipoRepresentation;
 import es.unican.ss.LigaFutbolCliente.restdomain.Jugador;
+import es.unican.ss.LigaFutbolCliente.restdomain.NestedJugador;
 
 public class Cliente {
 
@@ -146,10 +150,12 @@ public class Cliente {
 		Response response = invocationBuilder.get();
 		
 		// Tratamiento de la respuesta
+		EquipoRepresentation equipoRepresentation = null;
 		Equipo equipo = null;
 		switch(response.getStatus()) {
 			case 200:
-				equipo = response.readEntity(Equipo.class);
+				equipoRepresentation = response.readEntity(EquipoRepresentation.class);
+				equipo = transformEquipoRepresentation(equipoRepresentation);
 				break;
 			case 404:
 				String errorNotFound = String.format("El equipo %s no existe%n", nombre);
@@ -160,6 +166,48 @@ public class Cliente {
 		}
 		
 		return equipo;
+	}
+	
+	private static Equipo transformEquipoRepresentation(EquipoRepresentation equipoRepresentation) throws Exception {
+		Equipo equipo = new Equipo();
+		equipo.setNombre(equipoRepresentation.getNombre());
+		equipo.setPuntos(equipoRepresentation.getPuntos());
+		equipo.setPartidosGanados(equipoRepresentation.getPartidosGanados());
+		equipo.setPartidosPerdidos(equipoRepresentation.getPartidosPerdidos());
+		equipo.setPartidosJugados(equipoRepresentation.getPartidosJugados());
+		List<Jugador> jugadores = new ArrayList<Jugador>();
+		// Descarga de jugadores API REST
+		for(NestedJugador nestedJugador : equipoRepresentation.getJugadoresNested().getJugadores()) {
+			jugadores.add(getJugadorRest(equipo.getNombre(), nestedJugador.getDorsal()));
+		}
+		equipo.setJugadores(jugadores);
+		return equipo;
+	}
+	
+	private static Jugador getJugadorRest(String equipo, int dorsal) throws Exception {
+		// Invocación API REST
+		Client client = ClientBuilder.newClient();
+		WebTarget base = client.target(BASE_API_LIGA);
+		WebTarget resource = base.path("liga/"+equipo+"/"+dorsal);
+		Invocation.Builder invocationBuilder = resource.request(MediaType.APPLICATION_XML);
+		invocationBuilder.accept(MediaType.APPLICATION_XML);
+		Response response = invocationBuilder.get();
+		
+		// Tratamiento de la respuesta
+		Jugador jugador = null;
+		switch(response.getStatus()) {
+			case 200:
+				jugador = response.readEntity(Jugador.class);
+				break;
+			case 404:
+				String errorNotFound = String.format("El jugador con dorsal %d del equipo %s no existe%n", dorsal, equipo);
+				throw new Exception(errorNotFound);
+			default:
+				String generalError = String.format("Se ha producido un error %d al actualizar el jugador con dorsal %d%n", response.getStatus(), dorsal);
+				throw new Exception(generalError);
+		}
+		
+		return jugador;
 	}
 	
 	private static void putEquipoRest(Equipo equipo) throws Exception {
