@@ -13,7 +13,7 @@ import es.unican.ss.LigaFutbolHiperenlaces.domain.Jugador;
 public class RankingRepresentation {
 
 	// Resultados a mostrar por página
-	private static final int RESULTS_PER_PAGE = 4;
+	private static final int RESULTS_PER_PAGE = 3;
 	
 	private List<NestedJugador> jugadoresToReturn;
 	private AtomLink previous;
