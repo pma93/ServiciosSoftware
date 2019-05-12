@@ -3,6 +3,7 @@ package es.unican.ss.LigaFutbolHiperenlaces.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,6 +16,7 @@ public class RankingRepresentation {
 	// Resultados a mostrar por página
 	private static final int RESULTS_PER_PAGE = 3;
 	
+	// Elementos que conforman el ranking
 	private List<NestedJugador> jugadoresToReturn;
 	private AtomLink previous;
 	private AtomLink next;
@@ -22,12 +24,14 @@ public class RankingRepresentation {
 	
 	public RankingRepresentation() {}
 
-	public RankingRepresentation(List<Jugador> jugadores, UriInfo uriInfo, int indiceIni) {
+	public RankingRepresentation(List<Jugador> jugadores, UriInfo uriInfo, int indiceIni, String equipo) {
 		
+		// Número de resultados totales
 		int numResults = jugadores.size();
 		
 		// Página actual comenzando por cero
 		int currentPage = (int) Math.floor(indiceIni / RESULTS_PER_PAGE);
+		
 		// Índice para el comienzo de la página actual
 		int currentIndex = currentPage * RESULTS_PER_PAGE;
 		
@@ -49,9 +53,12 @@ public class RankingRepresentation {
 			}
 			
 			// Crear siempre enlace propio
-			int selfIndex = currentIndex;
-			String selfURI = uriInfo.getAbsolutePathBuilder().replaceQueryParam("indiceIni", selfIndex).toString();
-			setSelf(new AtomLink("self", selfURI));
+			UriBuilder selfURI = uriInfo.getAbsolutePathBuilder();
+			if(equipo != null)
+				selfURI.replaceQueryParam("equipo", equipo);
+			if(indiceIni >= 0)
+				selfURI.replaceQueryParam("indiceIni", indiceIni);
+			setSelf(new AtomLink("self", selfURI.toString()));
 			
 			// Crear representación de jugadores
 			int resultsLeft = (numResults - indiceIni);

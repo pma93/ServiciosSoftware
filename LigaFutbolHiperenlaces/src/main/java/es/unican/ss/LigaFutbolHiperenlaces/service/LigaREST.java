@@ -194,29 +194,27 @@ public class LigaREST {
 			@QueryParam("indiceIni") int indiceIni, @Context UriInfo uriInfo) {
 
 		Response.ResponseBuilder builder;
-		
 		List<Jugador> jugadores = new ArrayList<Jugador>();
 		
+		// Ranking de goleadores de un equipo
 		if(equipo != null) {
-			// Ranking de goleadores de un equipo
 			Equipo eq = ligaDAO.getEquipo(equipo);
 			if(eq != null) {
 				jugadores = eq.getJugadores();
 				Collections.sort(jugadores);
-				builder = Response.ok(new RankingRepresentation(jugadores, uriInfo, indiceIni));
+				builder = Response.ok(new RankingRepresentation(jugadores, uriInfo, indiceIni, equipo));
 				return builder.build();
 			}else {
 				builder = Response.status(Response.Status.NOT_FOUND);
 				return builder.build();	
 			}
+		// Ranking de goleadores global
 		} else {
-			// Ranking de goleadores global
 			jugadores = ligaDAO.getJugadores();
+			Collections.sort(jugadores);
+			RankingRepresentation rp = new RankingRepresentation(jugadores, uriInfo, indiceIni, equipo);
+			builder = Response.ok(rp);
+			return builder.build();
 		}
-
-		Collections.sort(jugadores);
-		RankingRepresentation rp = new RankingRepresentation(jugadores, uriInfo, indiceIni);
-		builder = Response.ok(rp);
-		return builder.build();
 	}
 }
