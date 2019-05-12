@@ -14,7 +14,7 @@
 	</partido>
 	
 	<partido>
-		<equipoLocal nombre="Atlético de Madrid" totalGoles="2">
+		<equipoLocal nombre="Atletico de Madrid" totalGoles="2">
 			<gol dorsal="8" minuto="6"/>
 			<gol dorsal="3" minuto="28"/>
 			<tarjeta tipo="AMARILLA" dorsal="1"/>
