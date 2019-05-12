@@ -1,6 +1,7 @@
 package es.unican.ss.LigaFutbol.service;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -109,9 +110,13 @@ public class LigaREST {
 		
 		// Si no existe ya, se añade
 		if(eq.getJugadores().add(jugador)) {
-			ligaDAO.actualizaEquipo(eq);
-			URI location = uriInfo.getAbsolutePathBuilder().build(); 
-			builder = Response.created(location);
+			try {
+				ligaDAO.actualizaEquipo(eq);
+				String location = uriInfo.getAbsolutePathBuilder().toString() + "/" + jugador.getDorsal();
+				builder = Response.created(new URI(location));
+			} catch (URISyntaxException e) {
+				builder = Response.serverError();
+			}
 		}else {
 			builder = Response.serverError();
 		}
