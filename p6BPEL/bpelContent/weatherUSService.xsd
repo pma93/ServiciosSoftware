@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). 
+	RI's version is Metro/2.3.1 (UNKNOWN_BRANCH-false; 2015-01-15T16:53:43+0100) 
+	JAXWS-RI/2.2.10 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 
+	svn-revision#unknown. -->
+<xs:schema xmlns:tns="http://ws.cdyne.com/WeatherWS/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" version="1.0"
+	targetNamespace="http://ws.cdyne.com/WeatherWS/">
+
+	<xs:element name="ArrayOfWeatherDescription"
+		type="tns:ArrayOfWeatherDescription" />
+
+	<xs:element name="ForecastReturn" type="tns:ForecastReturn" />
+
+	<xs:element name="GetCityForecastByZIP">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ZIP" type="xs:string" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GetCityForecastByZIPResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GetCityForecastByZIPResult"
+					type="tns:ForecastReturn" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GetCityWeatherByZIP">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ZIP" type="xs:string" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GetCityWeatherByZIPResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GetCityWeatherByZIPResult"
+					type="tns:WeatherReturn" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GetWeatherInformation">
+		<xs:complexType>
+			<xs:sequence />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="GetWeatherInformationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GetWeatherInformationResult"
+					type="tns:ArrayOfWeatherDescription" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="WeatherReturn" type="tns:WeatherReturn" />
+
+	<xs:complexType name="ForecastReturn">
+		<xs:sequence>
+			<xs:element name="Success" type="xs:boolean" />
+			<xs:element name="ResponseText" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="State" type="xs:string" minOccurs="0" />
+			<xs:element name="City" type="xs:string" minOccurs="0" />
+			<xs:element name="WeatherStationCity" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="ForecastResult"
+				type="tns:ArrayOfForecast" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ArrayOfForecast">
+		<xs:sequence>
+			<xs:element name="Forecast" type="tns:Forecast"
+				nillable="true" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Forecast">
+		<xs:sequence>
+			<xs:element name="Date" type="xs:dateTime" />
+			<xs:element name="WeatherID" type="xs:short" />
+			<xs:element name="Desciption" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Temperatures" type="tns:temp" />
+			<xs:element name="ProbabilityOfPrecipiation"
+				type="tns:POP" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="temp">
+		<xs:sequence>
+			<xs:element name="MorningLow" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="DaytimeHigh" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="POP">
+		<xs:sequence>
+			<xs:element name="Nighttime" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Daytime" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ArrayOfWeatherDescription">
+		<xs:sequence>
+			<xs:element name="WeatherDescription"
+				type="tns:WeatherDescription" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WeatherDescription">
+		<xs:sequence>
+			<xs:element name="WeatherID" type="xs:short" />
+			<xs:element name="Description" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="PictureURL" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="WeatherReturn">
+		<xs:sequence>
+			<xs:element name="Success" type="xs:boolean" />
+			<xs:element name="ResponseText" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="State" type="xs:string" minOccurs="0" />
+			<xs:element name="City" type="xs:string" minOccurs="0" />
+			<xs:element name="WeatherStationCity" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="WeatherID" type="xs:short" />
+			<xs:element name="Description" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Temperature" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="RelativeHumidity" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Wind" type="xs:string" minOccurs="0" />
+			<xs:element name="Pressure" type="xs:string" minOccurs="0" />
+			<xs:element name="Visibility" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="WindChill" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Remarks" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

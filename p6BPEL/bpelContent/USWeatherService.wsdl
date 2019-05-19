@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions name="USWeatherService"
+	xmlns:tns="http://www.unican.es/ss/USWeatherService"
+	targetNamespace="http://www.unican.es/ss/USWeatherService"
+	xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+	xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:uszs="http://www.unican.es/ss/USZipService"
+	xmlns:usws="http://ws.cdyne.com/WeatherWS/">
+
+	<import location="USZip.wsdl"
+		namespace="http://www.unican.es/ss/USZipService" />
+	<import location="weatherUSService.wsdl"
+		namespace="http://ws.cdyne.com/WeatherWS/" />
+		
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		TYPE DEFINITION - List of types participating in this BPEL process The BPEL 
+		Designer will generate default request and response types but you can define 
+		or import any XML Schema type and use them as part of the message types. 
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<types>
+		<schema attributeFormDefault="unqualified"
+			elementFormDefault="qualified"
+			targetNamespace="http://www.unican.es/ss/USWeatherService"
+			xmlns="http://www.w3.org/2001/XMLSchema">
+
+			<element name="getTemperatureRequest">
+				<complexType>
+					<sequence>
+						<element name="city" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="getHumidityRequest">
+				<complexType>
+					<sequence>
+						<element name="city" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+
+			<element name="getTemperatureResponse">
+				<complexType>
+					<sequence>
+						<element name="temperature" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="getHumidityResponse">
+				<complexType>
+					<sequence>
+						<element name="humidity" type="string" />
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</types>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		MESSAGE TYPE DEFINITION - Definition of the message types used as part of 
+		the port type defintions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<message name="getTemperatureRequestMsg">
+		<part name="params" element="tns:getTemperatureRequest" />
+	</message>
+	<message name="getTemperatureResponseMsg">
+		<part name="params" element="tns:getTemperatureResponse" />
+	</message>
+
+	<message name="getHumidityRequestMsg">
+		<part name="params" element="tns:getHumidityRequest" />
+	</message>
+	<message name="getHumidityResponseMsg">
+		<part name="params" element="tns:getHumidityResponse" />
+	</message>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		PORT TYPE DEFINITION - A port type groups a set of operations into a logical 
+		service unit. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<!-- portType implemented by the USWeatherService BPEL process -->
+	<portType name="USWeatherServiceInterface">
+		<operation name="getTemperature">
+			<input message="tns:getTemperatureRequestMsg" />
+			<output message="tns:getTemperatureResponseMsg" />
+		</operation>
+		<operation name="getHumidity">
+			<input message="tns:getHumidityRequestMsg" />
+			<output message="tns:getHumidityResponseMsg" />
+		</operation>
+	</portType>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		PARTNER LINK TYPE DEFINITION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<plnk:partnerLinkType name="USWeatherServicePLT">
+		<plnk:role name="USWeatherServiceProvider"
+			portType="tns:USWeatherServiceInterface" />
+	</plnk:partnerLinkType>
+
+	<plnk:partnerLinkType name="USZipServicePLT">
+		<plnk:role name="USZipProvider"
+			portType="uszs:USZipInterface"></plnk:role>
+	</plnk:partnerLinkType>
+
+	<plnk:partnerLinkType name="WeatherUSServicePLT">
+		<plnk:role name="WeatherUSServiceProvider"
+			portType="usws:WeatherSoap"></plnk:role>
+	</plnk:partnerLinkType>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		BINDING DEFINITION - Defines the message format and protocol details for 
+		a web service. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<binding name="USWeatherServiceBinding"
+		type="tns:USWeatherServiceInterface">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="getTemperature">
+			<soap:operation
+				soapAction="http://www.unican.es/ss/USWeatherService/temperature" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+
+		<operation name="getHumidity">
+			<soap:operation
+				soapAction="http://www.unican.es/ss/USWeatherService/humidity" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+		</operation>
+	</binding>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+		SERVICE DEFINITION - A service groups a set of ports into a service unit. 
+		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<service name="USWeatherServiceService">
+		<port name="USWeatherServicePort"
+			binding="tns:USWeatherServiceBinding">
+			<soap:address
+				location="http://localhost:8080/ode/processes/USWeatherService" />
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03"
+	xmlns:USWeatherService="http://www.unican.es/ss/USWeatherService"
+	xmlns:USZipService="http://www.unican.es/ss/USZipService"
+	xmlns:WeatherWS="http://ws.cdyne.com/WeatherWS/">
+
+	<process name="USWeatherService:USWeatherService">
+		<active>true</active>
+		<retired>false</retired>
+		<process-events generate="all" />
+		<provide partnerLink="client">
+			<service name="USWeatherService:USWeatherServiceService"
+				port="USWeatherServicePort" />
+		</provide>
+		<invoke partnerLink="USZipPL">
+			<service name="USZipService:USZipServiceService"
+				port="USZipServicePort" />
+		</invoke>
+		<invoke partnerLink="WeatherUSPL">
+			<service name="WeatherWS:WeatherServiceService"
+				port="WeatherServicePort" />
+		</invoke>
+	</process>
+</deploy>

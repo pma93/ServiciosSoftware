@@ -1,0 +1,16 @@
+/ArrayOfForecast.class
+/ArrayOfWeatherDescription.class
+/Forecast.class
+/ForecastReturn.class
+/GetCityForecastByZIP.class
+/GetCityForecastByZIPResponse.class
+/GetCityWeatherByZIP.class
+/GetCityWeatherByZIPResponse.class
+/GetWeatherInformation.class
+/GetWeatherInformationResponse.class
+/ObjectFactory.class
+/POP.class
+/Temp.class
+/WeatherDescription.class
+/WeatherReturn.class
+/package-info.class
