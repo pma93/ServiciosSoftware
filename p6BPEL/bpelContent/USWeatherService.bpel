@@ -268,7 +268,7 @@
 								<tns:getHumedadResponse
 									xmlns:tns="http://www.unican.es/ss/USWeatherService"
 									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-									<tns:humedad>tns:humidity</tns:humedad>
+									<tns:humidity>tns:humidity</tns:humidity>
 								</tns:getHumedadResponse>
 							</bpel:literal>
 						</bpel:from>
