@@ -115,7 +115,7 @@
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		<operation name="getTemperature">
 			<soap:operation
-				soapAction="http://www.unican.es/ss/USWeatherService/temperature" />
+				soapAction="http://www.unican.es/ss/USWeatherService/getTemperature" />
 			<input>
 				<soap:body use="literal" />
 			</input>
@@ -126,7 +126,7 @@
 
 		<operation name="getHumidity">
 			<soap:operation
-				soapAction="http://www.unican.es/ss/USWeatherService/humidity" />
+				soapAction="http://www.unican.es/ss/USWeatherService/getHumidity" />
 			<input>
 				<soap:body use="literal" />
 			</input>
