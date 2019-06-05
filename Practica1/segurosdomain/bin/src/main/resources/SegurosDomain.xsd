@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.unican.es/ss/SegurosDomain"
+	xmlns:tns="http://www.unican.es/ss/SegurosDomain"
+	elementFormDefault="qualified">
+
+	<element name="aseguradora">
+		<complexType>
+			<sequence>
+				<element name="cliente" type="tns:Cliente" minOccurs="0"
+					maxOccurs="unbounded" />
+				<element name="seguro" type="tns:Seguro" minOccurs="0"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="Cliente">
+		<sequence>
+			<element name="nombre" type="string"/>
+			<element name="email" type="tns:Email"/>
+			<element name="seguro" type="tns:Seguro" minOccurs="1" maxOccurs="unbounded"/>
+			<element name="parte" type="tns:Parte" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+		<attribute name="dni" type="tns:DNI"/>
+	</complexType>
+
+	<simpleType name="DNI">
+		<restriction base="string">
+			<pattern value="[0-9]{8}[A-Z]"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="Email">
+		<restriction base="string">
+			<pattern value=".+\@.+\..+"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="SeguroID">
+		<restriction base="string">
+			<pattern value="[A-Z]{3}-[0-9]{6}"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="SeguroTipo">
+		<restriction base="string">
+			<enumeration value="TERCEROS" />
+			<enumeration value="TODO_RIESGO" />
+			<enumeration value="TODO_RIESGO_FRANQUICIA" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="Vehiculo">
+		<sequence>
+			<element name="potencia" type="integer"/>
+			<element name="usoprofesional" type="boolean"/>
+		</sequence>
+		<attribute name="matricula" type="tns:VehiculoMatricula"/>
+	</complexType>
+	
+	<simpleType name="VehiculoMatricula">
+		<restriction base="string">
+			<pattern value="[0-9]{4} [A-Z]{3}"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="Seguro">
+		<sequence>
+			<element name="tipo" type="tns:SeguroTipo" />
+			<element name="vehiculo" type="tns:Vehiculo" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="id" type="ID"/>
+	</complexType>
+
+	<complexType name="Parte">
+		<sequence>
+			<element name="importe" type="decimal" />
+			<element name="fecha" type="string"/>
+			<element name="seguroref" type="IDREF" />
+		</sequence>
+		<attribute name="id" type="tns:SeguroID"/>
+	</complexType>
+</schema>
